@@ -19,32 +19,39 @@ function postData(url, data) {
   });
 }
 
-const get_config_url = 'https://staging.kalodata.com/au/getAutomations';
+const get_config_url = 'https://kalodata.com/au/getAutomations';
 
 const columns: TableColumnsType<DataType> = [
   {
-    title: 'Country',
+    title: '用户国家',
     dataIndex: 'country',
     key: 'country',
+    width: '90px'
+  },
+  {
+    title: '会员等级',
+    dataIndex: 'tag',
+    key: 'tag',
     width: '80px'
   },
   {
-    title: 'Tag',
-    dataIndex: 'tag',
-    key: 'tag',
-    width: '160px'
+    title: '套餐',
+    dataIndex: 'package',
+    key: 'package',
+    width: '70px'
   },
   {
-    title: 'Phone',
+    title: '电话',
     dataIndex: 'phone',
     key: 'phone',
-    width: '160px'
+    width: '140px'
   },
   {
-    title: 'Action',
+    title: '操作',
     dataIndex: '',
     key: 'x',
-    render: () => <a>Login</a>,
+    width: '60px',
+    render: () => <a>登录</a>,
   },
 ];
 const storage = new Storage({
@@ -94,7 +101,7 @@ function IndexPopup() {
     <ThemeProvider>
       <div
         style={{
-          minWidth: "480px",
+          minWidth: "500px",
           display: "flex",
           flexDirection: "column",
           padding: 8
@@ -110,6 +117,7 @@ function IndexPopup() {
                     if (data.success) {
                       setDataSource(data.data)
                       setPassport(inputValue)
+                      message.info("账号获取成功")
                     } else {
                       message.error(data.message)
                     }
@@ -130,7 +138,7 @@ function IndexPopup() {
           columns={columns} 
           style={{ marginTop: "8px", hidden: dataSource.length == 0 }} 
           pagination={{ pageSize: 50 }} 
-          scroll={{ y: 300 }}
+          scroll={{ y: 350 }}
           size="small"
           onRow={(record, rowIndex) => {
             return {

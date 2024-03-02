@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
       const record = msg.record;
       const passport = msg.passport
       console.log("record:" + record + ", passport:" + passport)
-      const url: string = 'https://staging.kalodata.com/au/testLogin';
+      const url: string = 'https://kalodata.com/au/testLogin';
       postData(url, passport, record.phone)
       .then(data => {
         if (data.success) {
