@@ -2,10 +2,12 @@ import type { PlasmoCSConfig, PlasmoGetShadowHostId } from "plasmo"
 import axios, { AxiosResponse } from 'axios';
 
 function postData(url: string, passport: string, phone: string): Promise<any> {
-  return axios.post(url, {
+  return axios.post(url, 
+    {
       passport,
       phone
-    })
+    }
+  )
   .then(response => {
     return response.data;
   })
@@ -24,9 +26,10 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   } else {
     chrome.runtime.sendMessage({ type: "clear_cookies" }, function(response) {
       const record = msg.record;
-      const passport = msg.passport
+      const passport = msg.passport;
+      const domain = location.hostname;
       console.log("record:" + record + ", passport:" + passport)
-      const url: string = 'https://kalodata.com/au/testLogin';
+      const url: string = 'https://' + domain + '/au/testLogin';
       postData(url, passport, record.phone)
       .then(data => {
         if (data.success) {

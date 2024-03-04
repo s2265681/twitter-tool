@@ -3,7 +3,7 @@ export {}
 console.log("Kalodata测试工具")
 
 function clearCookies() {
-  const url = "https://kalodata.com";
+  const url = "https://www.kalodata.com";
   chrome.cookies.getAll({ url: url }, function(cookies) {
     cookies.forEach(function(cookie) {
       chrome.cookies.remove({ url: url, name: cookie.name });

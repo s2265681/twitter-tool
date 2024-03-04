@@ -19,7 +19,7 @@ function postData(url, data) {
   });
 }
 
-const get_config_url = 'https://kalodata.com/au/getAutomations';
+const get_config_url = 'https://www.kalodata.com/au/getAutomations';
 
 const columns: TableColumnsType<DataType> = [
   {
