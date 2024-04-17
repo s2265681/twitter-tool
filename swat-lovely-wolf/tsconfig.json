@@ -9,11 +9,10 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
-    "jsx": "react",
     "paths": {
       "~*": [
-        "./*"
-      ],
+        "./src/*"
+      ]
     },
     "baseUrl": "."
   }

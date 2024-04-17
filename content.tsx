@@ -1,60 +1,44 @@
-import type { PlasmoCSConfig, PlasmoGetShadowHostId } from "plasmo"
-import axios, { AxiosResponse } from 'axios';
+import type { PlasmoCSConfig, PlasmoGetShadowHostId } from "plasmo";
+import React, { useEffect } from "react";
+import cssText from "data-text:~style.css";
+import cssText2 from "data-text:antd/dist/antd.css";
+import PersonalEnhance from "~feature/PersonalEnhance";
+import { getCookieValue } from "~utils";
 
-function postData(url: string, passport: string, phone: string): Promise<any> {
-  return axios.post(url, 
-    {
-      passport,
-      phone
-    }
-  )
-  .then(response => {
-    return response.data;
-  })
-  .catch(error => {
-    throw new Error('请求失败:', error);
-  });
-};
-
-function refreshPage() {
-  location.reload();
-}
-
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  if (msg.type === "clear_cookies") {
-    console.log("Ignore")
-  } else {
-    chrome.runtime.sendMessage({ type: "clear_cookies" }, function(response) {
-      const record = msg.record;
-      const passport = msg.passport;
-      const domain = location.hostname;
-      console.log("record:" + record + ", passport:" + passport)
-      const url: string = 'https://' + domain + '/au/testLogin';
-      postData(url, passport, record.phone)
-      .then(data => {
-        if (data.success) {
-          refreshPage();
-          sendResponse("Account: " + record.phone + ", Login success")
-        } else {
-          sendResponse("Account: " + record.phone + ", Login fail")
-        }
-        return true;
-      })
-      .catch(error => {
-        sendResponse("Account: " + record.phone + ", Login fail")
-      });
-    });
-  }
-  return true;
-});
+// function postData(url: string, passport: string, phone: string): Promise<any> {
+//   return axios
+//     .post(url, {
+//       passport,
+//       phone,
+//     })
+//     .then((response) => {
+//       return response.data;
+//     })
+//     .catch((error) => {
+//       throw new Error("请求失败:", error);
+//     });
+// }
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://*.kalodata.com/*"]
-}
+  matches: ["https://*.twitter.com/*"],
+};
 
-const empty = () => (
-  <div></div>
-)
+export const getStyle = () => {
+  const style = document.createElement("style");
+  style.textContent = cssText;
+  style.textContent += cssText2;
+  return style;
+};
 
-export default empty
+const PageIndex = () => {
+  useEffect(() => {
+    const url = "https://twitter.com";
+    const night_mode = getCookieValue("night_mode");
+    console.log(night_mode, "night_mode");
+  }, []);
 
+  // 功能1 follower followers 页面增加筛选搜索能力
+  return <PersonalEnhance></PersonalEnhance>;
+};
+
+export default PageIndex;
