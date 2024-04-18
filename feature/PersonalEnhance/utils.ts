@@ -4,7 +4,13 @@ export const CUSTOM_CARD_KEY = ["#followers", "#following"];
 export const $FOLLOWERS = "#followers";
 export const $FOLLOWING = "#following";
 
-export const followUrlPaths = ["verified_followers", "followers", "following"];
+export const followUrlPaths = [
+  "verified_followers",
+  "followers",
+  "following",
+  "followers_you_follow",
+  "creator-subscriptions",
+];
 
 export const insertTabElement = (parentElement) => {
   // 在哪个位置插入
