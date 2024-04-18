@@ -1,7 +1,5 @@
 export {};
 
-console.log("twitter 测试工具");
-
 // function clearCookies() {
 //   const url = "https://www.kalodata.com";
 //   chrome.cookies.getAll({ url: url }, function(cookies) {

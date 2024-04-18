@@ -1,0 +1,39 @@
+.block_style_wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 32px;
+  &:hover {
+    background-color: #0f14191a;
+    transition: all 0.2;
+  }
+}
+
+.nav_wrapper {
+  display: flex;
+  height: 100%;
+  position: relative;
+  align-items: center;
+  min-width: 56px;
+  .underline {
+    background-color: transparent;
+    position: absolute;
+    bottom: 0;
+    height: 4px;
+    border-radius: 8px;
+    width: 100%;
+  }
+  .text {
+    font-weight: 400;
+  }
+}
+
+.nav_wrapper.cardType_selected {
+  .underline {
+    background-color: rgb(29, 155, 240);
+    visibility: visible !important;
+  }
+  .text {
+    font-weight: 700;
+  }
+}
