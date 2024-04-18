@@ -9,6 +9,7 @@ import {
 } from "./utils";
 import { getCookieValue } from "~utils";
 
+let lastLocation = "verified_followers";
 export const useRenderDomHelpHooks = () => {
   const [curSelected, setCurSelected] = useState(getLocationPathName());
   const [renderCardContent, setRenderCardContent] = useState(false);
@@ -29,7 +30,10 @@ export const useRenderDomHelpHooks = () => {
         // 切换tab拿到相应的 值， 维护切换的状态
         setTimeout(() => {
           const locationPathName = getLocationPathName();
-          setCurSelected(locationPathName);
+          setCurSelected((oldState) => {
+            lastLocation = oldState;
+            return locationPathName;
+          });
         }, 0);
       });
     }
@@ -47,7 +51,9 @@ export const useRenderDomHelpHooks = () => {
       // 隐藏当前展示区域的节点, 渲染自定义的组件
 
       setTimeout(() => {
-        setOriginAreaIsShow(false);
+        if (!CUSTOM_CARD_KEY.includes(lastLocation)) {
+          setOriginAreaIsShow(false);
+        }
       }, 100);
       setTimeout(() => {
         setRenderCardContent(true);
