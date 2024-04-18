@@ -1,15 +1,17 @@
-import { findLastChildRecursive } from "~utils";
+import { findLastChildRecursive, getCookieValue } from "~utils";
 
 export const CUSTOM_CARD_KEY = ["#followers", "#following"];
 export const $FOLLOWERS = "#followers";
 export const $FOLLOWING = "#following";
+
+export const followUrlPaths = ["verified_followers", "followers", "following"];
 
 export const insertTabElement = (parentElement) => {
   // 在哪个位置插入
   var newDiv = document.createElement("div");
   newDiv.className = "block_style_wrapper";
   newDiv.innerHTML =
-    "<div class='nav_wrapper' id='#followers'><span class='text'>Followers</span><div class='underline'></div></div>";
+    "<div class='nav_wrapper' id='#followers'><span class='text text-theme_text'>Followers</span><div class='underline'></div></div>";
   newDiv.setAttribute("role", "tab");
   newDiv.addEventListener(
     "click",
@@ -23,7 +25,7 @@ export const insertTabElement = (parentElement) => {
   var newDiv2 = document.createElement("div");
   newDiv2.className = "block_style_wrapper";
   newDiv2.innerHTML =
-    "<div class='nav_wrapper' id='#following'><span class='text'>Following</span><div class='underline'></div></div>";
+    "<div class='nav_wrapper' id='#following'><span class='text text-theme_text'>Following</span><div class='underline'></div></div>";
   newDiv2.setAttribute("role", "tab");
   newDiv2.addEventListener(
     "click",
@@ -82,5 +84,26 @@ export const setCustomCardSelected = (typeNode, selected = false) => {
     typeNode.classList.add("cardType_selected");
   } else {
     typeNode.classList.remove("cardType_selected");
+  }
+};
+
+export const setThemeColor = () => {
+  const night_mode = getCookieValue("night_mode");
+  if (night_mode === "0") {
+    document.documentElement.className = "light";
+  } else {
+  }
+  switch (night_mode) {
+    case "0":
+      document.documentElement.className = "light";
+      break;
+    case "1":
+      document.documentElement.className = "dim";
+      break;
+    case "2":
+      document.documentElement.className = "drak";
+      break;
+    default:
+      break;
   }
 };

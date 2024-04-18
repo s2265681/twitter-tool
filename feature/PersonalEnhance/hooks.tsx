@@ -6,6 +6,7 @@ import {
   CUSTOM_CARD_KEY,
   setOriginAreaIsShow,
   setCustomCardSelected,
+  setThemeColor,
 } from "./utils";
 import { getCookieValue } from "~utils";
 
@@ -21,10 +22,8 @@ export const useRenderDomHelpHooks = () => {
     if (tablistNode) {
       // 插入元素
       insertTabElement(tablistNode);
-      // 获取当前的主题色
-      const night_mode = getCookieValue("night_mode");
-      // 设置当前主题色
-      setCurTheme(night_mode);
+      // 获取当前的主题色设置当前主题色
+      setThemeColor();
       // 切换类型
       tablistNode.addEventListener("click", () => {
         // 切换tab拿到相应的 值， 维护切换的状态

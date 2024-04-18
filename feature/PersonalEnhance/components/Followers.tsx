@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
-import { Button, Dropdown, Icon, Input, Menu, message, Tooltip } from "antd";
-import { created_at, followers_count, following_count } from "./config";
+import React from "react";
+import Filters from "./Filters";
 
 const mockListData = {
   list: [
@@ -33,8 +32,6 @@ const mockListData = {
   pageSize: 50,
 };
 
-const { Search } = Input;
-
 const List = () => {
   return (
     <div>
@@ -49,11 +46,9 @@ const List = () => {
               className="w-[40px] h-[40px] rounded-full"
             ></img>
             <div className="flex flex-col gap-1">
-              <div className="text-[rgb(15,20,25)] font-semibold">
-                {item.name}
-              </div>
+              <div className=" font-semibold text-theme_text">{item.name}</div>
               <div className="text-[rgb(83,100,113)]">{item.sceen_name}</div>
-              <div className="text-[rgb(15,20,25)]">{item.description}</div>
+              <div className="text-theme_text">{item.description}</div>
             </div>
           </div>
         );
@@ -62,121 +57,10 @@ const List = () => {
   );
 };
 
-const menu1 = (
-  <Menu>
-    {created_at.map((item) => {
-      return (
-        <Menu.Item key={item.key}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://www.taobao.com/"
-          >
-            {item.label}
-          </a>
-        </Menu.Item>
-      );
-    })}
-  </Menu>
-);
-
-const menu2 = (
-  <Menu>
-    {followers_count.map((item) => {
-      return (
-        <Menu.Item key={item.key}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://www.taobao.com/"
-          >
-            {item.label}
-          </a>
-        </Menu.Item>
-      );
-    })}
-  </Menu>
-);
-
-const menu3 = (
-  <Menu>
-    {following_count.map((item) => {
-      return (
-        <Menu.Item key={item.key}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://www.taobao.com/"
-          >
-            {item.label}
-          </a>
-        </Menu.Item>
-      );
-    })}
-  </Menu>
-);
-
-const SearchCom = () => {
-  return (
-    <div className="px-8 my-5 mt-7">
-      <Search
-        placeholder="input search text"
-        onSearch={(value) => console.log(value)}
-        // style={{ width: 200 }}
-      />
-    </div>
-  );
-};
-
-const Filter = () => {
-  const Xref = useRef();
-  return (
-    <div className="flex items-center gap-4 px-8" ref={Xref}>
-      <Dropdown
-        overlay={menu1}
-        getPopupContainer={() => Xref.current}
-        trigger={["click"]}
-      >
-        <a
-          className="ant-dropdown-link !text-[#666]"
-          onClick={(e) => e.preventDefault()}
-        >
-          created_at 2023 <Icon type="down" />
-        </a>
-      </Dropdown>
-      <Dropdown
-        overlay={menu2}
-        getPopupContainer={() => Xref.current}
-        trigger={["click"]}
-      >
-        <a
-          className="ant-dropdown-link !text-[#666]"
-          onClick={(e) => e.preventDefault()}
-        >
-          followers_count <Icon type="down" />
-        </a>
-      </Dropdown>
-      <Dropdown
-        overlay={menu3}
-        getPopupContainer={() => Xref.current}
-        trigger={["click"]}
-      >
-        <a
-          className="ant-dropdown-link !text-[#666]"
-          onClick={(e) => e.preventDefault()}
-        >
-          following_count <Icon type="down" />
-        </a>
-      </Dropdown>
-    </div>
-  );
-};
-
 export default () => {
   return (
     <div className="" id="xxx">
-      <Filter></Filter>
-      <SearchCom></SearchCom>
+      <Filters></Filters>
       <List></List>
     </div>
   );

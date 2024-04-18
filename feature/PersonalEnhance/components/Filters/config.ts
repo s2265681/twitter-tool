@@ -2,22 +2,27 @@ export const created_at = [
   {
     label: "2024",
     key: "2024",
+    rightValue: "100",
   },
   {
     label: "2023",
     key: "2023",
+    rightValue: "100",
   },
   {
     label: "2022",
     key: "2022",
+    rightValue: "100",
   },
   {
     label: "2021",
     key: "2021",
+    rightValue: "100",
   },
   {
     label: "2020",
     key: "2020",
+    rightValue: "100",
   },
 ];
 

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import PersonalEnhance from "~feature/PersonalEnhance";
 import { getCookieValue } from "~utils";
 import "./style.css";
+import "./style.scss";
 
 // function postData(url: string, passport: string, phone: string): Promise<any> {
 //   return axios
