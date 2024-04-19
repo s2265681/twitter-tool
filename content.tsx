@@ -34,7 +34,7 @@ export const config: PlasmoCSConfig = {
 // };
 
 const PageIndex = () => {
-  console.log("shhow");
+  // 监听
   // 功能1 follower followers 页面增加筛选搜索能力
   return <PersonalEnhance></PersonalEnhance>;
 };

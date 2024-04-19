@@ -30,6 +30,9 @@
     "tailwindcss": "^3.4.3",
     "typescript": "5.3.3"
   },
+  "background": {
+    "service_worker": "./static/background/index.ts"
+  },
   "manifest": {
     "host_permissions": [
       "https://*/*"
@@ -39,16 +42,6 @@
       "tabs",
       "scripting",
       "activeTab"
-    ],
-    "background": {
-      "scripts": [
-        "background.js"
-      ],
-      "persistent": false
-    },
-    "action,browser_actions": {
-      "default_popup": "",
-      "default_icon": "icon.png"
-    }
+    ]
   }
 }

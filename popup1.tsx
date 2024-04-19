@@ -26,12 +26,23 @@ function postData(url, data) {
 }
 
 function IndexPopup() {
-  return null;
   return (
     <div className="content">
       1212
       <div className="text-[#fff]">ddddd</div>
       <Button type="primary">安妮11</Button>
+      <a href="https://www.plasmo.com" target="_blank">
+        Plasmo
+      </a>{" "}
+      <button
+        onClick={() => {
+          chrome.tabs.create({
+            url: "https://www.plasmo.com",
+          });
+        }}
+      >
+        open tab page
+      </button>
     </div>
   );
 }
