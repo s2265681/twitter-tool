@@ -41,11 +41,14 @@ export default () => {
         input search
       </div>
 
-      <div className="text-primary bg-primary">主题色设置</div>
-
-      <div className="bg-primary text-white">主题色设置</div>
-
-      <div className="bg-theme_bg">主题背景色</div>
+      {/* <div className="text-primary bg-primary">主题色设置1+</div>
+      <div className="bg-primary text-white">主题色设置123+</div>
+      <div className="bg-theme_bg">主题背景色ee</div>
+      <div className="bg-drowdown_bg">下拉背景色</div>
+      <div className="text-input_primary">输入框颜色选中</div>
+      <div className="text-input_selected">输入框颜色选中hover</div>
+      <div className="text-input_default">1输入框颜色文字默认</div>
+      <div className="bg-input_bg">输入框颜色背景默认</div> */}
     </div>
   );
 };

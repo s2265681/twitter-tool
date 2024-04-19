@@ -1,8 +1,8 @@
 {
-  "name": "Twitter Help Tool",
-  "displayName": "Twitter Help Tool",
+  "name": "soulscan",
+  "displayName": "soulscan",
   "version": "0.0.1",
-  "description": "For Test",
+  "description": "Finding your Web3 alpha powered by Soulscan.info@soulscan.com",
   "author": "rockshang.cn",
   "scripts": {
     "dev": "plasmo dev",
@@ -35,7 +35,20 @@
       "https://*/*"
     ],
     "permissions": [
-      "cookies"
-    ]
+      "cookies",
+      "tabs",
+      "scripting",
+      "activeTab"
+    ],
+    "background": {
+      "scripts": [
+        "background.js"
+      ],
+      "persistent": false
+    },
+    "action,browser_actions": {
+      "default_popup": "",
+      "default_icon": "icon.png"
+    }
   }
 }

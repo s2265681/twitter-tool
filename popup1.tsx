@@ -26,6 +26,7 @@ function postData(url, data) {
 }
 
 function IndexPopup() {
+  return null;
   return (
     <div className="content">
       1212

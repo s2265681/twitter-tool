@@ -23,7 +23,18 @@ export const config: PlasmoCSConfig = {
   matches: ["https://*.twitter.com/*"],
 };
 
+// export const config: PlasmoCSConfig = {
+//   matches: [
+//     "https://twitter.com/*/verified_followers",
+//     "https://twitter.com/*/followers_you_follow",
+//     "https://twitter.com/*/followers",
+//     "https://twitter.com/*/following",
+//     "https://twitter.com/*/creator-subscriptions/subscriptions",
+//   ],
+// };
+
 const PageIndex = () => {
+  console.log("shhow");
   // 功能1 follower followers 页面增加筛选搜索能力
   return <PersonalEnhance></PersonalEnhance>;
 };
