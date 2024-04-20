@@ -25,6 +25,17 @@
   }
   .text {
     font-weight: 400;
+    color: #f17f0b !important;
+  }
+
+  .text_theme_text {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .icon_img {
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 
@@ -35,5 +46,6 @@
   }
   .text {
     font-weight: 700;
+    color: #f17f0b;
   }
 }

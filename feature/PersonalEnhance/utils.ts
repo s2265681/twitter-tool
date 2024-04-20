@@ -1,5 +1,5 @@
-import { findLastChildRecursive, getCookieValue } from "~utils";
-
+import { findLastChildRecursive, findLastSpan, getCookieValue } from "~utils";
+import Icon from "data-base64:~assets/icon.png";
 export const CUSTOM_CARD_KEY = ["#followers", "#following"];
 export const $FOLLOWERS = "#followers";
 export const $FOLLOWING = "#following";
@@ -16,12 +16,13 @@ export const insertTabElement = (parentElement) => {
   // 在哪个位置插入
   var newDiv = document.createElement("div");
   newDiv.className = "block_style_wrapper";
-  newDiv.innerHTML =
-    "<div class='nav_wrapper' id='#followers'><span class='text text-theme_text'>Followers</span><div class='underline'></div></div>";
+  newDiv.innerHTML = `<div class='nav_wrapper' id='#followers'><span class='text text_theme_text'><img src='${Icon}' class='icon_img'/>Followers</span><div class='underline'></div></div>`;
   newDiv.setAttribute("role", "tab");
   newDiv.addEventListener(
     "click",
     () => {
+      // 设置原来的标签的选中字体颜色
+      setOriginSpanFontWeight();
       location.hash = "#followers";
       newDiv.classList.add("selected");
     },
@@ -30,12 +31,13 @@ export const insertTabElement = (parentElement) => {
 
   var newDiv2 = document.createElement("div");
   newDiv2.className = "block_style_wrapper";
-  newDiv2.innerHTML =
-    "<div class='nav_wrapper' id='#following'><span class='text text-theme_text'>Following</span><div class='underline'></div></div>";
+  newDiv2.innerHTML = `<div class='nav_wrapper' id='#following'><span class='text text_theme_text'><img src='${Icon}' class='icon_img'/>Following</span><div class='underline'></div></div>`;
   newDiv2.setAttribute("role", "tab");
   newDiv2.addEventListener(
     "click",
     () => {
+      // 设置原来的标签的选中字体颜色
+      setOriginSpanFontWeight();
       location.hash = "#following";
       newDiv2.classList.add("selected");
     },
@@ -49,6 +51,25 @@ export const insertTabElement = (parentElement) => {
   parentElement.insertBefore(newDiv, lastSecondChild.nextSibling);
   parentElement.appendChild(newDiv2);
 };
+
+function setOriginSpanFontWeight() {
+  const tablistNode = document.querySelector('[role="tablist"]');
+  const tabs = tablistNode.querySelectorAll("[role=tab]");
+  if (tabs) {
+    tabs.forEach((item, index) => {
+      let findSpanChildren = findLastSpan(item);
+      if (
+        findSpanChildren &&
+        !findSpanChildren.className.includes("text_theme_text")
+      ) {
+        findSpanChildren.style.fontWeight = 400;
+        item.addEventListener("click", () => {
+          findSpanChildren.style.fontWeight = 700;
+        });
+      }
+    });
+  }
+}
 
 export const getLocationPathName = () => {
   if (location.hash && CUSTOM_CARD_KEY.includes(location.hash))
@@ -107,7 +128,7 @@ export const setThemeColor = () => {
       document.documentElement.className = "dim";
       break;
     case "2":
-      document.documentElement.className = "drak";
+      document.documentElement.className = "dark";
       break;
     default:
       break;

@@ -8,18 +8,15 @@ import {
   CUSTOM_CARD_KEY,
   $FOLLOWERS,
   $FOLLOWING,
-  setOriginAreaIsShow,
   followUrlPaths,
 } from "./utils";
 import "./index.scss";
 
 const PersonlEnhance = () => {
-  console.log("render....");
-  const { curTheme, curSelected, renderCardContent } = useRenderDomHelpHooks();
+  const {  renderCardContent } = useRenderDomHelpHooks();
   const localPath = getLocationPathName();
   if (!CUSTOM_CARD_KEY.includes(localPath)) return null;
   if (!renderCardContent) return null;
-  console.log(curTheme, curSelected, "curTheme, curSelected");
   return createPortal(
     <div className="flex items-stretch justify-around  relative px-4 bg-theme_bg">
       {$FOLLOWERS === localPath && <Followers></Followers>}
@@ -31,7 +28,6 @@ const PersonlEnhance = () => {
 
 const PersonlEnhanceWrapper = () => {
   const [isCanRender, setIsCanRender] = useState(false);
-  const renderCount = useRef(0);
   useEffect(() => {
     let timerId = null;
     function updateIsRender() {

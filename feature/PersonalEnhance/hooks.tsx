@@ -25,7 +25,7 @@ export const useRenderDomHelpHooks = () => {
       // 获取当前的主题色设置当前主题色
       setThemeColor();
       // 切换类型
-      tablistNode.addEventListener("click", () => {
+      tablistNode.addEventListener("click", (e) => {
         // 切换tab拿到相应的 值， 维护切换的状态
         setTimeout(() => {
           const locationPathName = getLocationPathName();

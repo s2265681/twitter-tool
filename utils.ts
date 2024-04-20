@@ -21,3 +21,12 @@ export function findLastChildRecursive(element) {
     return element;
   }
 }
+
+export function findLastSpan(element) {
+  if (element && element.tagName == "SPAN") {
+    return element;
+  } else if (element.firstElementChild) {
+    return findLastSpan(element.firstElementChild);
+  }
+  return null;
+}

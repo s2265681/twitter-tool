@@ -1,13 +1,9 @@
 import Input from "~components/Input";
-import Dropdown from "../../../../components/Dropdown";
-import { created_at, followers_count, following_count } from "./config";
+import Dropdown from "../../../components/Dropdown";
+import { created_at, followers_count, following_count } from "../config";
 import React from "react";
 
 export default () => {
-  console.log(
-    document.documentElement.className,
-    "document.documentElement.className;;"
-  );
   return (
     <div>
       <div className="flex items-center gap-4 justify-start mt-5">

@@ -1,5 +1,10 @@
 import React from "react";
+import CommonList from "./CommonList";
 
 export default () => {
-  return <div>Following</div>;
+  return (
+    <div>
+      <CommonList></CommonList>
+    </div>
+  );
 };
