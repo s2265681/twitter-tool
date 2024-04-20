@@ -38,7 +38,7 @@ const List = () => {
       {mockListData.list.map((item, index) => {
         return (
           <div
-            className="cursor-pointer py-3 px-4 hover:bg-[#00000008] flex gap-2 items-start border-solid border-[#00000008] border-[1px]"
+            className="cursor-pointer py-3 px-4 hover:bg-[#00000008] flex gap-2 items-start"
             key={index}
           >
             <img

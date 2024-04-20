@@ -1,0 +1,44 @@
+.tt_input {
+  font: inherit;
+  background: none;
+}
+
+.tt_input:focus {
+  outline: none;
+}
+
+:root.light {
+  .tt_input_wrapper {
+    background-color: #f5f5f5;
+    border: 1px solid #e6e6e6;
+    .search_svg {
+      path {
+        opacity: 1 !important;
+        fill: #707070 !important;
+      }
+    }
+    .tt_input {
+      color: #333;
+      &::placeholder {
+        color: #999999;
+      }
+    }
+  }
+}
+
+:root.dim,
+:root.drak {
+  .tt_input_wrapper {
+    background-color: #333;
+    border: 1px solid #5c5c5c;
+    .tt_input::placeholder {
+      color: #707070;
+    }
+    .tt_input {
+      color: #fff;
+      &::placeholder {
+        color: #707070;
+      }
+    }
+  }
+}

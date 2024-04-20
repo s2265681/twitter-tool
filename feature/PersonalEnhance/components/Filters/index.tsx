@@ -1,5 +1,5 @@
-import { Button, Icon, Input, Menu, message, Tooltip } from "antd";
-import Dropdown from "./Dropdown";
+import Input from "~components/Input";
+import Dropdown from "../../../../components/Dropdown";
 import { created_at, followers_count, following_count } from "./config";
 import React from "react";
 
@@ -10,45 +10,38 @@ export default () => {
   );
   return (
     <div>
-      <div className="flex items-center gap-4 justify-start mt-5 mb-[10px]">
-        <Dropdown
-          options={created_at}
-          value="2023"
-          setValue={(item) => {
-            console.log(item);
-          }}
-          className="flex-1"
-        ></Dropdown>
+      <div className="flex items-center gap-4 justify-start mt-5">
         <Dropdown
           options={followers_count}
-          value="10~100"
-          setValue={(item) => {
+          defaultValue=""
+          onSelect={(item) => {
             console.log(item);
           }}
           className="flex-1"
+          label="followers"
         ></Dropdown>
         <Dropdown
           options={following_count}
-          value="0~10"
-          setValue={(item) => {
+          defaultValue=""
+          onSelect={(item) => {
             console.log(item);
           }}
           className="flex-1"
+          label="following"
+        ></Dropdown>
+        <Dropdown
+          options={created_at}
+          defaultValue=""
+          onSelect={(item) => {
+            console.log(item);
+          }}
+          className="flex-1"
+          label="Joined"
         ></Dropdown>
       </div>
-
-      <div className="my-[20px] w-full h-[30px] bg-[rgba(0,0,0,0.1)] px-[20px]">
-        input search
+      <div className="mt-[10px] mb-[10px] w-full">
+        <Input placeholder="search anything"></Input>
       </div>
-
-      {/* <div className="text-primary bg-primary">主题色设置1+</div>
-      <div className="bg-primary text-white">主题色设置123+</div>
-      <div className="bg-theme_bg">主题背景色ee</div>
-      <div className="bg-drowdown_bg">下拉背景色</div>
-      <div className="text-input_primary">输入框颜色选中</div>
-      <div className="text-input_selected">输入框颜色选中hover</div>
-      <div className="text-input_default">1输入框颜色文字默认</div>
-      <div className="bg-input_bg">输入框颜色背景默认</div> */}
     </div>
   );
 };
