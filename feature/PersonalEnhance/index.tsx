@@ -13,12 +13,14 @@ import {
 import "./index.scss";
 
 const PersonlEnhance = () => {
-  const {  renderCardContent } = useRenderDomHelpHooks();
+  const { renderCardContent } = useRenderDomHelpHooks();
   const localPath = getLocationPathName();
+
   if (!CUSTOM_CARD_KEY.includes(localPath)) return null;
   if (!renderCardContent) return null;
+
   return createPortal(
-    <div className="flex items-stretch justify-around  relative px-4 bg-theme_bg">
+    <div className="flex justify-around  relative bg-theme_bg w-full">
       {$FOLLOWERS === localPath && <Followers></Followers>}
       {$FOLLOWING === localPath && <Followering></Followering>}
     </div>,

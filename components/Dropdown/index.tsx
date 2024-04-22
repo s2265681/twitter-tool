@@ -23,7 +23,6 @@ const Dropdown = ({
 }: Iprops) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [value, setValue] = useState(defaultValue);
-  console.log(value, "value", !!value);
   return (
     <div
       className={classNames(
@@ -73,13 +72,13 @@ const Dropdown = ({
             {options.map((item, index) => {
               return (
                 <div
-                  key={item.key}
+                  key={item.label}
                   onClick={() => {
                     setVisible(false);
                     setValue(
                       item.rightValue
-                        ? item.key + "--" + item.rightValue
-                        : item.key
+                        ? item.label + "--" + item.rightValue
+                        : item.label
                     );
                     onSelect(item);
                   }}
@@ -87,7 +86,8 @@ const Dropdown = ({
                     "drowdown_modal_content_item",
                     "flex justify-between items-center px-[12px] h-[50px] cursor-pointer select-none",
                     {
-                      drowdown_modal_content_item_selected: value === item.key,
+                      drowdown_modal_content_item_selected:
+                        value === item.label,
                       "!border-b-0": options.length - 1 === index,
                     }
                   )}

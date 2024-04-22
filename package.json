@@ -34,12 +34,18 @@
     "service_worker": "./static/background/index.ts"
   },
   "manifest": {
-    "resources": [
-      "~raw.js",
-      "assets/*.png"
-    ],
-    "matches": [
-      "https://twitter.com/*"
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "~raw.js",
+          "assets/pic*.png",
+          "resources/test.json",
+          "background.ts"
+        ],
+        "matches": [
+          "https://twitter.com/*"
+        ]
+      }
     ],
     "host_permissions": [
       "https://*/*"

@@ -98,3 +98,9 @@ export const mockListData = {
   pageIndex: 1,
   pageSize: 50,
 };
+
+const mockDropdown = {
+  created_at: [2016, 2017, 2018, 2019, 2020, 2021, 2022],
+  followers: ["1-10k", "10k-100k"],
+  followering: ["1-10k", "10k-100k"],
+};

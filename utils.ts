@@ -30,3 +30,33 @@ export function findLastSpan(element) {
   }
   return null;
 }
+
+export function senChomeMessage({ action, params, response }) {
+  chrome.runtime.sendMessage(
+    {
+      action,
+      params,
+    },
+    (res) => {
+      response(res);
+    }
+  );
+}
+
+export function handleFilterObj(arr: string[]) {
+  if (arr && arr?.length) {
+    let newItems = [];
+    arr.forEach((item) => {
+      newItems.push({
+        label: item.split(":")[0],
+        rightValue: item.split(":")[1],
+      });
+    });
+    return newItems;
+  }
+  return [];
+}
+
+export function getUserName() {
+  return location.pathname.split("/")[1];
+}
