@@ -44,7 +44,9 @@ const PersonlEnhanceWrapper = () => {
           tablistNode &&
           HomeTimeline
         ) {
-          setIsCanRender(true);
+          setTimeout(() => {
+            setIsCanRender(true);
+          }, 2000);
         } else {
           setIsCanRender(false);
         }
@@ -58,6 +60,8 @@ const PersonlEnhanceWrapper = () => {
   }, []);
 
   if (!isCanRender) return null;
+  const locationPath = location.pathname.split("/")?.[2];
+  if (!followUrlPaths.includes(locationPath)) return null;
 
   return <PersonlEnhance></PersonlEnhance>;
 };

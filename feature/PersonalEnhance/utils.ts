@@ -46,14 +46,16 @@ export const insertTabElement = (parentElement) => {
   // 获取父元素的子元素列表
   const children = parentElement.children;
   // 找到第2个子元素
-  const lastSecondChild = children[children.length - 2];
+  const lastSecondChild = children[children.length - 3];
+  const lastOneChild = children[children.length - 2];
   // 在第2个子元素后面插入新元素
   parentElement.insertBefore(newDiv, lastSecondChild.nextSibling);
-  parentElement.appendChild(newDiv2);
+  parentElement.insertBefore(newDiv2, lastOneChild.nextSibling);
 };
 
 function setOriginSpanFontWeight() {
   const tablistNode = document.querySelector('[role="tablist"]');
+  if (!tablistNode) return;
   const tabs = tablistNode.querySelectorAll("[role=tab]");
   if (tabs) {
     tabs.forEach((item, index) => {
@@ -79,6 +81,7 @@ export const getLocationPathName = () => {
 
 export const setOriginTabSelectedStyle = (isShow) => {
   const tablistNode = document.querySelector('[role="tablist"]');
+  if (!tablistNode) return;
   const tabs = tablistNode.querySelectorAll("[role=tab]");
   if (tabs) {
     tabs.forEach((item, index) => {
@@ -98,6 +101,7 @@ export const setOriginAreaIsShow = (display: boolean) => {
   const home_timeline_area = document.querySelector(
     '[aria-label="Home timeline"]'
   );
+  if (!home_timeline_area) return;
   // const sessionRegion = document.querySelector('[role="region"]');
   if (home_timeline_area.lastChild && home_timeline_area.lastChild.style) {
     home_timeline_area.lastChild.style.display = display ? "block" : "none";
