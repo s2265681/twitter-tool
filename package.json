@@ -10,7 +10,6 @@
     "package": "plasmo package"
   },
   "dependencies": {
-    "@plasmohq/storage": "1.9.3",
     "antd": "^3.26.20",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
@@ -34,27 +33,10 @@
     "service_worker": "./static/background/index.ts"
   },
   "manifest": {
-    "web_accessible_resources": [
-      {
-        "resources": [
-          "~raw.js",
-          "assets/pic*.png",
-          "resources/test.json",
-          "background.ts"
-        ],
-        "matches": [
-          "https://twitter.com/*"
-        ]
-      }
-    ],
     "host_permissions": [
-      "https://*/*"
+      "*://twitter.com/*",
+      "*://*.twitter.com/*"
     ],
-    "permissions": [
-      "cookies",
-      "tabs",
-      "scripting",
-      "activeTab"
-    ]
+    "permissions": []
   }
 }
