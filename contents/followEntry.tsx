@@ -2,8 +2,8 @@ import type { PlasmoCSConfig, PlasmoGetShadowHostId } from "plasmo";
 import React, { useEffect } from "react";
 import PersonalEnhance from "~feature/PersonalEnhance";
 import { getCookieValue, senChomeMessage } from "~utils";
-import "./style.css";
-import "./style.scss";
+import "../style.css";
+import "../style.scss";
 
 // 在content脚本中接收数据
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

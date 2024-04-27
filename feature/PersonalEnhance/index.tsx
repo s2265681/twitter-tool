@@ -30,8 +30,10 @@ const PersonlEnhance = () => {
 
 const PersonlEnhanceWrapper = () => {
   const [isCanRender, setIsCanRender] = useState(false);
+
   useEffect(() => {
     let timerId = null;
+    let timerId2 = null;
     function updateIsRender() {
       timerId = setInterval(() => {
         const tablistNode = document.querySelector('[role="tablist"]');
@@ -44,11 +46,13 @@ const PersonlEnhanceWrapper = () => {
           tablistNode &&
           HomeTimeline
         ) {
-          setTimeout(() => {
+          timerId2 = setTimeout(() => {
             setIsCanRender(true);
-          }, 2000);
+            clearTimeout(timerId2);
+          }, 1000);
         } else {
           setIsCanRender(false);
+          clearTimeout(timerId2);
         }
       }, 50);
     }
