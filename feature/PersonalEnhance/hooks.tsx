@@ -52,6 +52,15 @@ export const useRenderDomHelpHooks = () => {
       setTimeout(() => {
         if (!CUSTOM_CARD_KEY.includes(lastLocation)) {
           setOriginAreaIsShow(false);
+          // setTimeout(() => {
+          //   const custom_card = document.querySelector("#custom_card");
+          //   if (custom_card) {
+          //     const nextEle = custom_card.nextElementSibling;
+          //     if (nextEle && nextEle.style) {
+          //       nextEle.style.display = "none";
+          //     }
+          //   }
+          // }, 1000);
         }
       }, 100);
       setTimeout(() => {

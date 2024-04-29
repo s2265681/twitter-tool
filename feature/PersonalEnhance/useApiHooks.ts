@@ -3,6 +3,7 @@ import { get_filter_info } from "./api";
 import { senChomeMessage, handleFilterObj, getUserName } from "~utils";
 
 export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<{
     [key: string]: { label: string; key: string; rightValue: string }[];
   }>({
@@ -10,6 +11,10 @@ export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
     followering: [],
     followers: [],
   });
+  const [pageNo, setPageNo] = useState(1);
+
+  const [params, setParams] = useState({});
+  const [forceUpdate, setForceUpdate] = useState(new Date().getTime());
 
   const [dataSource, setDataSource] = useState<{
     user_info_list: [];
@@ -37,27 +42,55 @@ export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
         setFilters(newFilters);
       },
     });
-  }, []);
+  }, [type]);
 
   useEffect(() => {
+    const searchParams = params["text"];
+    if (pageNo === 1) {
+      setLoading(true);
+    }
     senChomeMessage({
-      action: "get_user_info_list",
+      action: searchParams ? "get_search_user_info_list" : "get_user_info_list",
       params: {
-        screen_name: "ethereum",
-        follow_category: "followers",
-        created_at: "2017",
-        followers_count: "1k-10k",
-        following_count: "1k-10k",
-        cursor: 1,
+        screen_name: getUserName() || "ethereum",
+        cursor: pageNo || 1,
+        follow_category: type,
+        ...params,
       },
       response: ({ data }) => {
-        setDataSource(data || []);
+        setDataSource(
+          pageNo === 1
+            ? data
+            : {
+                user_info_list: [
+                  ...dataSource.user_info_list,
+                  ...data.user_info_list,
+                ],
+                cursor: data.cursor,
+                total: data.total,
+              }
+        );
+        setLoading(false);
       },
     });
-  }, []);
+  }, [pageNo, forceUpdate]);
+
+  useEffect(() => {
+    setPageNo(1);
+    setForceUpdate(new Date().getTime());
+  }, [
+    type,
+    params["followers"],
+    params["created_at"],
+    params["following"],
+    params["text"],
+  ]);
 
   return {
     filters,
     dataSource,
+    setParams,
+    loading,
+    setPageNo,
   };
 };

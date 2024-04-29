@@ -15,7 +15,7 @@ interface Iprops {
   label: string;
 }
 const Dropdown = ({
-  options,
+  options = [],
   defaultValue,
   onSelect,
   className,
@@ -23,6 +23,7 @@ const Dropdown = ({
 }: Iprops) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [value, setValue] = useState(defaultValue);
+  if (options?.length === 0) return null;
   return (
     <div
       className={classNames(

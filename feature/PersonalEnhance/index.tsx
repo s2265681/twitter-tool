@@ -11,6 +11,7 @@ import {
   followUrlPaths,
 } from "./utils";
 import "./index.scss";
+import { clearLastSelection } from "~utils";
 
 const PersonlEnhance = () => {
   const { renderCardContent } = useRenderDomHelpHooks();
@@ -20,7 +21,10 @@ const PersonlEnhance = () => {
   if (!renderCardContent) return null;
 
   return createPortal(
-    <div className="flex justify-around  relative bg-theme_bg w-full">
+    <div
+      className="flex justify-around  relative bg-theme_bg w-full"
+      id="custom_card"
+    >
       {$FOLLOWERS === localPath && <Followers></Followers>}
       {$FOLLOWING === localPath && <Followering></Followering>}
     </div>,
@@ -50,15 +54,16 @@ const PersonlEnhanceWrapper = () => {
             setIsCanRender(true);
             clearTimeout(timerId2);
           }, 1000);
+          clearLastSelection();
         } else {
           setIsCanRender(false);
-          clearTimeout(timerId2);
         }
       }, 50);
     }
     updateIsRender();
     return () => {
       clearInterval(timerId);
+      clearTimeout(timerId2);
       setIsCanRender(false);
     };
   }, []);

@@ -15,22 +15,38 @@ chrome.action.onClicked.addListener(() => {
 // 监听来自content script的消息
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "get_filter_info") {
-    console.log("开始发送请求1", request);
-    get_filter_info(request.params).then((data) => {
-      sendResponse({ data: data });
-    });
+    try {
+      get_filter_info(request.params).then((data) => {
+        sendResponse({ data: data });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   if (request.action === "get_user_info_list") {
-    console.log("开始发送请求2", request);
-    get_user_info_list(request.params).then((data) => {
-      sendResponse({ data: data });
-    });
+    try {
+      get_user_info_list(request.params).then((data) => {
+        if (data.error) {
+          sendResponse({
+            data: {
+              user_info_list: [],
+            },
+          });
+        }
+        sendResponse({ data: data });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   if (request.action === "get_search_user_info_list") {
-    console.log("开始发送请求3", request);
-    get_search_user_info_list(request.params).then((data) => {
-      sendResponse({ data: data });
-    });
+    try {
+      get_search_user_info_list(request.params).then((data) => {
+        sendResponse({ data: data });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return true;
 });

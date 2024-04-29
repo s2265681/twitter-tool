@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-export default ({ dataSource }) => {
+export default ({ dataSource, setPageNo }) => {
+  const data = Array.isArray(dataSource?.user_info_list)
+    ? dataSource?.user_info_list
+    : dataSource?.user_info_list.user_info_list || [];
+  const cursor = dataSource.cursor || 1;
+  const total = dataSource.total;
+  const loadMore = data.length < total;
+
+  useEffect(() => {
+    const reload_page = document.querySelector("#reload_page");
+    if (!reload_page) return;
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio <= 0) return;
+      if (loadMore) {
+        setPageNo(cursor + 1);
+      }
+    });
+    // 开始监听
+    intersectionObserver.observe(document.querySelector("#reload_page"));
+    return () => {
+      if (reload_page) {
+        intersectionObserver.unobserve(reload_page);
+      }
+    };
+  }, [cursor]);
+
+  if (!data.length) return null;
   return (
-    <div>
-      {dataSource.user_info_list.map((item, index) => {
+    <div className="relative pb-[30px]">
+      {data?.map((item, index) => {
         return (
           <div
             className="cursor-pointer py-3 hover:bg-[#00000008] flex gap-2 items-start px-4  transform transition duration-200"
@@ -26,6 +52,14 @@ export default ({ dataSource }) => {
           </div>
         );
       })}
+      {loadMore && (
+        <div
+          className="w-full absolute bottom-0 left-0 text-center text-white pb-4"
+          id="reload_page"
+        >
+          load more...
+        </div>
+      )}
     </div>
   );
 };

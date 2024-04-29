@@ -102,10 +102,8 @@ export const setOriginAreaIsShow = (display: boolean) => {
     '[aria-label="Home timeline"]'
   );
   if (!home_timeline_area) return;
-  // const sessionRegion = document.querySelector('[role="region"]');
   if (home_timeline_area.lastChild && home_timeline_area.lastChild.style) {
     home_timeline_area.lastChild.style.display = display ? "block" : "none";
-    // sessionRegion && sessionRegion.style.display = display ? "block" : "none";
   }
 };
 

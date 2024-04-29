@@ -3,7 +3,7 @@ import Dropdown from "../../../components/Dropdown";
 import { created_at, followers_count, following_count } from "../config";
 import React from "react";
 
-export default ({ filters }) => {
+export default ({ filters, setParams }) => {
   return (
     <div className="px-4">
       <div className="flex items-center gap-4 justify-start mt-5">
@@ -11,7 +11,10 @@ export default ({ filters }) => {
           options={filters.followers}
           defaultValue=""
           onSelect={(item) => {
-            console.log("当前选中的 followers是 ", item);
+            setParams((_params) => ({
+              ..._params,
+              followers: item.label,
+            }));
           }}
           className="flex-1"
           label="followers"
@@ -20,7 +23,10 @@ export default ({ filters }) => {
           options={filters.following}
           defaultValue=""
           onSelect={(item) => {
-            console.log("当前选中的 following  ", item);
+            setParams((_params) => ({
+              ..._params,
+              following: item.label,
+            }));
           }}
           className="flex-1"
           label="following"
@@ -29,14 +35,25 @@ export default ({ filters }) => {
           options={filters.created_at}
           defaultValue=""
           onSelect={(item) => {
-            console.log("当前选中的 Joined  ", item);
+            setParams((_params) => ({
+              ..._params,
+              created_at: item.label,
+            }));
           }}
           className="flex-1"
           label="Joined"
         ></Dropdown>
       </div>
       <div className="mt-[10px] mb-[10px] w-full">
-        <Input placeholder="search anything"></Input>
+        <Input
+          placeholder="search anything"
+          onChange={(value) => {
+            setParams((_params) => ({
+              ..._params,
+              text: value,
+            }));
+          }}
+        ></Input>
       </div>
     </div>
   );
