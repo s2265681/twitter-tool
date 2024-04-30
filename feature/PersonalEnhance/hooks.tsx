@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   insertTabElement,
   getLocationPathName,
@@ -8,7 +8,7 @@ import {
   setCustomCardSelected,
   setThemeColor,
 } from "./utils";
-import { getCookieValue } from "~utils";
+import { getCookieValue, getUserName } from "~utils";
 
 let lastLocation = "verified_followers";
 export const useRenderDomHelpHooks = () => {
@@ -82,4 +82,51 @@ export const useRenderDomHelpHooks = () => {
     renderCardContent,
     curTheme,
   };
+};
+
+export const useRenderUserLink = () => {
+  const onceRef = useRef(false);
+  useEffect(() => {
+    let timerId = null;
+    function updateIsRender() {
+      timerId = setInterval(() => {
+        const primaryColumn = document.querySelector(
+          'div[data-testid="primaryColumn"]'
+        );
+        if (primaryColumn) {
+          // 插入元素？
+          if (!onceRef.current) {
+            const linkDoms = primaryColumn.querySelectorAll(
+              'a[role="link"][dir="ltr"]'
+            );
+            const followingLinkWrapper = linkDoms[0];
+            const followerLinkWrapper = linkDoms[1];
+            const followingLink = document.createElement("a");
+            const followerLink = document.createElement("a");
+            followingLink.innerHTML =
+              '<span class="custom_links">followers</span>';
+            followingLink.href = `/${getUserName()}/following#following`;
+            followingLinkWrapper.appendChild(followingLink);
+
+            followerLink.innerHTML =
+              '<span class="custom_links">followers</span>';
+            followerLink.href = `/${getUserName()}/followers#followers`;
+            followerLinkWrapper.appendChild(followerLink);
+          }
+          onceRef.current = true;
+        } else {
+          onceRef.current = false;
+        }
+      }, 50);
+    }
+    const fn = () => {
+      updateIsRender();
+    };
+    window.addEventListener("popstate", fn);
+    updateIsRender();
+    return () => {
+      clearInterval(timerId);
+      window.removeEventListener("popstate", fn);
+    };
+  }, []);
 };

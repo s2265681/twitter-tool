@@ -49,3 +49,12 @@
     color: #f17f0b;
   }
 }
+
+.custom_links {
+  color: #f17f0b;
+  cursor: pointer;
+  margin-left: 10px;
+  &:hover {
+    text-decoration: #f17f0b;
+  }
+}

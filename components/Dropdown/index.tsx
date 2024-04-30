@@ -69,7 +69,7 @@ const Dropdown = ({
             }}
           ></div>
           {/* 内容 */}
-          <div className="drowdown_modal_content z-[10] w-full h-auto absolute top-[8px] rounded-lg overflow-hidden">
+          <div className="drowdown_modal_content z-[10] w-full absolute top-[8px] rounded-lg h-[228px] overflow-auto">
             {options.map((item, index) => {
               return (
                 <div

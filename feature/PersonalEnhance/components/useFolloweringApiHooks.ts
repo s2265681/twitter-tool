@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { get_filter_info } from "./api";
+import { get_filter_info } from "../api";
 import { senChomeMessage, handleFilterObj, getUserName } from "~utils";
 
-export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
+export const useFolloweringApiHooks = ({ isCanRender }) => {
+  const type = "following";
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<{
     [key: string]: { label: string; key: string; rightValue: string }[];
@@ -27,6 +28,7 @@ export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
   });
 
   useEffect(() => {
+    if (!isCanRender) return;
     senChomeMessage({
       action: "get_filter_info",
       params: {
@@ -42,9 +44,10 @@ export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
         setFilters(newFilters);
       },
     });
-  }, [type]);
+  }, [isCanRender]);
 
   useEffect(() => {
+    if (!isCanRender) return;
     const searchParams = params["text"];
     if (pageNo === 1) {
       setLoading(true);
@@ -73,17 +76,21 @@ export const useApiHooks = ({ type }: { type: "followers" | "following" }) => {
         setLoading(false);
       },
     });
-  }, [pageNo, forceUpdate]);
+    setParams({ ...params, first: true });
+  }, [pageNo, forceUpdate, isCanRender]);
 
   useEffect(() => {
-    setPageNo(1);
-    setForceUpdate(new Date().getTime());
+    if (!isCanRender) return;
+    if (params["first"]) {
+      setPageNo(1);
+      setForceUpdate(new Date().getTime());
+    }
   }, [
-    type,
     params["followers"],
     params["created_at"],
     params["following"],
     params["text"],
+    isCanRender,
   ]);
 
   return {

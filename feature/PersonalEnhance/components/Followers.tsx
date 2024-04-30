@@ -1,12 +1,9 @@
 import React from "react";
 import CommonList from "./CommonList";
-import { useApiHooks } from "../useApiHooks";
 
-export default () => {
-  const { filters, dataSource, setParams, loading, setPageNo } = useApiHooks({
-    type: "followers",
-  });
-
+export default ({ followersParams }) => {
+  const { filters, dataSource, setParams, loading, setPageNo } =
+    followersParams;
   return (
     <div className="w-full">
       <CommonList
