@@ -104,7 +104,7 @@ export const useRenderUserLink = () => {
             const followingLink = document.createElement("a");
             const followerLink = document.createElement("a");
             followingLink.innerHTML =
-              '<span class="custom_links">followers</span>';
+              '<span class="custom_links">following</span>';
             followingLink.href = `/${getUserName()}/following#following`;
             followingLinkWrapper.appendChild(followingLink);
 
