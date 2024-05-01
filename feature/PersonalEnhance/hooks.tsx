@@ -91,27 +91,25 @@ export const useRenderUserLink = () => {
     let timerId = null;
     function updateIsRender() {
       timerId = setInterval(() => {
-        const primaryColumn = document.querySelector(
-          'div[data-testid="primaryColumn"]'
-        );
-        const HomeTimeline = primaryColumn?.querySelector(
-          'div[aria-label="Home timeline"]'
-        );
-
         const UserNameDom = document.querySelector(
           'div[data-testid="UserName"]'
         );
-        if (UserNameDom) {
+        const UserNameDomParent = UserNameDom?.parentElement;
+
+        if (!UserNameDom || !UserNameDomParent) {
+          onceRef.current = false;
+          return;
+        }
+
+        const followingLinkWrapper = UserNameDomParent.querySelector(
+          `a[role="link"][dir="ltr"][href="/${getUserName()}/verified_followers"]`
+        );
+        const followerLinkWrapper = UserNameDomParent.querySelector(
+          `a[role="link"][dir="ltr"][href="/${getUserName()}/following"]`
+        );
+        if (followingLinkWrapper && followerLinkWrapper) {
           // 插入元素？
           if (!onceRef.current) {
-            console.log("插入元素");
-            const UserNameDomParent = UserNameDom.parentElement;
-            UserNameDom.parentElement.lastChild.childNodes;
-            const linkDoms = UserNameDomParent.querySelectorAll(
-              'a[role="link"][dir="ltr"]'
-            );
-            const followingLinkWrapper = linkDoms[0];
-            const followerLinkWrapper = linkDoms[1];
             const followingLink = document.createElement("a");
             const followerLink = document.createElement("a");
             followingLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Following</span>`;
@@ -119,7 +117,7 @@ export const useRenderUserLink = () => {
             followingLinkWrapper.parentElement.appendChild(followingLink);
             followingLinkWrapper.parentElement.style.display = "flex";
             followingLinkWrapper.parentElement.style.flexDirection = "row";
-            followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Follower</span>`;
+            followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Followers</span>`;
             followerLink.href = `/${getUserName()}/followers#followers`;
             followerLinkWrapper.parentElement.appendChild(followerLink);
             followerLinkWrapper.parentElement.style.display = "flex";

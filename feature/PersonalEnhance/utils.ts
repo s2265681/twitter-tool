@@ -117,7 +117,8 @@ export const setCustomCardSelected = (typeNode, selected = false) => {
 };
 
 export const setThemeColor = () => {
-  const night_mode = getCookieValue("night_mode");
+  const night_mode = getCookieValue("night_mode") || "0";
+  console.log(night_mode, "night_mode");
   if (night_mode === "0") {
     document.documentElement.className = "light";
   } else {
