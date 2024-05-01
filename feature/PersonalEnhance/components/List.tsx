@@ -57,7 +57,7 @@ export default ({ dataSource, setPageNo }) => {
           className="text_theme_text w-full absolute bottom-0 left-0 text-center  pb-4"
           id="reload_page"
         >
-          load more...
+          {/* load more... */}
         </div>
       )}
     </div>

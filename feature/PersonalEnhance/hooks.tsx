@@ -9,6 +9,7 @@ import {
   setThemeColor,
 } from "./utils";
 import { getCookieValue, getUserName } from "~utils";
+import Icon from "data-base64:~assets/icon.png";
 
 let lastLocation = "verified_followers";
 export const useRenderDomHelpHooks = () => {
@@ -93,25 +94,36 @@ export const useRenderUserLink = () => {
         const primaryColumn = document.querySelector(
           'div[data-testid="primaryColumn"]'
         );
-        if (primaryColumn) {
+        const HomeTimeline = primaryColumn?.querySelector(
+          'div[aria-label="Home timeline"]'
+        );
+
+        const UserNameDom = document.querySelector(
+          'div[data-testid="UserName"]'
+        );
+        if (UserNameDom) {
           // 插入元素？
           if (!onceRef.current) {
-            const linkDoms = primaryColumn.querySelectorAll(
+            console.log("插入元素");
+            const UserNameDomParent = UserNameDom.parentElement;
+            UserNameDom.parentElement.lastChild.childNodes;
+            const linkDoms = UserNameDomParent.querySelectorAll(
               'a[role="link"][dir="ltr"]'
             );
             const followingLinkWrapper = linkDoms[0];
             const followerLinkWrapper = linkDoms[1];
             const followingLink = document.createElement("a");
             const followerLink = document.createElement("a");
-            followingLink.innerHTML =
-              '<span class="custom_links">following</span>';
+            followingLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Following</span>`;
             followingLink.href = `/${getUserName()}/following#following`;
-            followingLinkWrapper.appendChild(followingLink);
-
-            followerLink.innerHTML =
-              '<span class="custom_links">followers</span>';
+            followingLinkWrapper.parentElement.appendChild(followingLink);
+            followingLinkWrapper.parentElement.style.display = "flex";
+            followingLinkWrapper.parentElement.style.flexDirection = "row";
+            followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Follower</span>`;
             followerLink.href = `/${getUserName()}/followers#followers`;
-            followerLinkWrapper.appendChild(followerLink);
+            followerLinkWrapper.parentElement.appendChild(followerLink);
+            followerLinkWrapper.parentElement.style.display = "flex";
+            followerLinkWrapper.parentElement.style.flexDirection = "row";
           }
           onceRef.current = true;
         } else {

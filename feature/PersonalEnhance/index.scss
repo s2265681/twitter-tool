@@ -54,7 +54,40 @@
   color: #f17f0b;
   cursor: pointer;
   margin-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  font-size: 14px;
   &:hover {
-    text-decoration: #f17f0b;
+    text-decoration: underline;
+    text-decoration-color: #f17f0b;
+  }
+  img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+#reload_page {
+  position: relative;
+  &::after {
+    content: "load more";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    animation: dot 3s infinite steps(3, start);
+  }
+}
+
+@keyframes dot {
+  34% {
+    content: "load more.";
+  }
+  67% {
+    content: "load more..";
+  }
+  100% {
+    content: "load more...";
   }
 }

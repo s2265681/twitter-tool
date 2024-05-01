@@ -16,34 +16,40 @@ chrome.action.onClicked.addListener(() => {
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "get_filter_info") {
     try {
-      get_filter_info(request.params).then((data) => {
-        sendResponse({ data: data });
-      });
+      get_filter_info(request.params)
+        .then((data) => {
+          sendResponse({ data: data });
+        })
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
     }
   }
   if (request.action === "get_user_info_list") {
     try {
-      get_user_info_list(request.params).then((data) => {
-        if (data.error) {
-          sendResponse({
-            data: {
-              user_info_list: [],
-            },
-          });
-        }
-        sendResponse({ data: data });
-      });
+      get_user_info_list(request.params)
+        .then((data) => {
+          if (data.error) {
+            sendResponse({
+              data: {
+                user_info_list: [],
+              },
+            });
+          }
+          sendResponse({ data: data });
+        })
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
     }
   }
   if (request.action === "get_search_user_info_list") {
     try {
-      get_search_user_info_list(request.params).then((data) => {
-        sendResponse({ data: data });
-      });
+      get_search_user_info_list(request.params)
+        .then((data) => {
+          sendResponse({ data: data });
+        })
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
     }
