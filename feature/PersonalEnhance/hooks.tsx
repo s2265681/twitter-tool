@@ -102,10 +102,10 @@ export const useRenderUserLink = () => {
         }
 
         const followingLinkWrapper = UserNameDomParent.querySelector(
-          `a[role="link"][dir="ltr"][href="/${getUserName()}/verified_followers"]`
+          `a[role="link"][dir="ltr"][href="/${getUserName()}/following"]`
         );
         const followerLinkWrapper = UserNameDomParent.querySelector(
-          `a[role="link"][dir="ltr"][href="/${getUserName()}/following"]`
+          `a[role="link"][dir="ltr"][href="/${getUserName()}/verified_followers"]`
         );
         if (followingLinkWrapper && followerLinkWrapper) {
           // 插入元素？
@@ -117,6 +117,7 @@ export const useRenderUserLink = () => {
             followingLinkWrapper.parentElement.appendChild(followingLink);
             followingLinkWrapper.parentElement.style.display = "flex";
             followingLinkWrapper.parentElement.style.flexDirection = "row";
+
             followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Followers</span>`;
             followerLink.href = `/${getUserName()}/followers#followers`;
             followerLinkWrapper.parentElement.appendChild(followerLink);
