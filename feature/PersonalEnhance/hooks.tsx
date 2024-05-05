@@ -8,7 +8,7 @@ import {
   setCustomCardSelected,
   setThemeColor,
 } from "./utils";
-import { getCookieValue, getUserName } from "~utils";
+import { findLastChildRecursive } from "~utils";
 import Icon from "data-base64:~assets/icon.png";
 
 let lastLocation = "verified_followers";
@@ -87,6 +87,7 @@ export const useRenderDomHelpHooks = () => {
 
 export const useRenderUserLink = () => {
   const onceRef = useRef(false);
+  const userName2 = useRef(null);
   useEffect(() => {
     let timerId = null;
     function updateIsRender() {
@@ -94,6 +95,7 @@ export const useRenderUserLink = () => {
         const UserNameDom = document.querySelector(
           'div[data-testid="UserName"]'
         );
+
         const UserNameDomParent = UserNameDom?.parentElement;
 
         if (!UserNameDom || !UserNameDomParent) {
@@ -101,25 +103,34 @@ export const useRenderUserLink = () => {
           return;
         }
 
+        if (!userName2.current && UserNameDom?.children?.[0]) {
+          userName2.current = userName2.current
+            ? userName2.current
+            : findLastChildRecursive(UserNameDom.children[0]);
+          userName2.current = userName2.current.innerText.replace("@", "");
+        }
+
         const followingLinkWrapper = UserNameDomParent.querySelector(
-          `a[role="link"][dir="ltr"][href="/${getUserName()}/following"]`
+          `a[role="link"][dir="ltr"][href="/${userName2.current}/following"]`
         );
         const followerLinkWrapper = UserNameDomParent.querySelector(
-          `a[role="link"][dir="ltr"][href="/${getUserName()}/verified_followers"]`
+          `a[role="link"][dir="ltr"][href="/${userName2.current}/verified_followers"]`
         );
-        if (followingLinkWrapper && followerLinkWrapper) {
+
+        if (userName2.current && followingLinkWrapper && followerLinkWrapper) {
           // 插入元素？
           if (!onceRef.current) {
+            console.log(userName2.current, "userName2.current;;;");
             const followingLink = document.createElement("a");
             const followerLink = document.createElement("a");
             followingLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Following</span>`;
-            followingLink.href = `/${getUserName()}/following#following`;
+            followingLink.href = `/${userName2.current}/following#following`;
             followingLinkWrapper.parentElement.appendChild(followingLink);
             followingLinkWrapper.parentElement.style.display = "flex";
             followingLinkWrapper.parentElement.style.flexDirection = "row";
 
             followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Followers</span>`;
-            followerLink.href = `/${getUserName()}/followers#followers`;
+            followerLink.href = `/${userName2.current}/followers#followers`;
             followerLinkWrapper.parentElement.appendChild(followerLink);
             followerLinkWrapper.parentElement.style.display = "flex";
             followerLinkWrapper.parentElement.style.flexDirection = "row";
@@ -127,6 +138,7 @@ export const useRenderUserLink = () => {
           onceRef.current = true;
         } else {
           onceRef.current = false;
+          userName2.current = null;
         }
       }, 50);
     }
