@@ -1,6 +1,8 @@
 import { findLastChildRecursive, findLastSpan, getCookieValue } from "~utils";
 import Icon from "data-base64:~assets/icon.png";
-export const CUSTOM_CARD_KEY = ["#followers", "#following"];
+// export const CUSTOM_CARD_KEY = ["#followers", "#following"];
+export const CUSTOM_CARD_KEY = ["#followers"];
+
 export const $FOLLOWERS = "#followers";
 export const $FOLLOWING = "#following";
 
@@ -29,28 +31,29 @@ export const insertTabElement = (parentElement) => {
     true
   );
 
-  var newDiv2 = document.createElement("div");
-  newDiv2.className = "block_style_wrapper";
-  newDiv2.innerHTML = `<div class='nav_wrapper' id='#following'><span class='text text_theme_text'><img src='${Icon}' class='icon_img'/>Following</span><div class='underline'></div></div>`;
-  newDiv2.setAttribute("role", "tab");
-  newDiv2.addEventListener(
-    "click",
-    () => {
-      // 设置原来的标签的选中字体颜色
-      setOriginSpanFontWeight();
-      location.hash = "#following";
-      newDiv2.classList.add("selected");
-    },
-    true
-  );
-  // 获取父元素的子元素列表
   const children = parentElement.children;
-  // 找到第2个子元素
   const lastSecondChild = children[children.length - 3];
-  const lastOneChild = children[children.length - 2];
-  // 在第2个子元素后面插入新元素
   parentElement.insertBefore(newDiv, lastSecondChild.nextSibling);
-  parentElement.insertBefore(newDiv2, lastOneChild.nextSibling);
+
+  // var newDiv2 = document.createElement("div");
+  // newDiv2.className = "block_style_wrapper";
+  // newDiv2.innerHTML = `<div class='nav_wrapper' id='#following'><span class='text text_theme_text'><img src='${Icon}' class='icon_img'/>Following</span><div class='underline'></div></div>`;
+  // newDiv2.setAttribute("role", "tab");
+  // newDiv2.addEventListener(
+  //   "click",
+  //   () => {
+  //     // 设置原来的标签的选中字体颜色
+  //     setOriginSpanFontWeight();
+  //     location.hash = "#following";
+  //     newDiv2.classList.add("selected");
+  //   },
+  //   true
+  // );
+  // // 获取父元素的子元素列表
+  // // 找到第2个子元素
+  // const lastOneChild = children[children.length - 2];
+  // // 在第2个子元素后面插入新元素
+  // parentElement.insertBefore(newDiv2, lastOneChild.nextSibling);
 };
 
 function setOriginSpanFontWeight() {
