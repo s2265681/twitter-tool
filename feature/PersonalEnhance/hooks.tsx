@@ -120,19 +120,25 @@ export const useRenderUserLink = () => {
         if (userName2.current && followingLinkWrapper && followerLinkWrapper) {
           // 插入元素？
           if (!onceRef.current) {
+            if (UserNameDomParent.querySelector(".custom_links_following")) {
+              UserNameDomParent.querySelector(
+                ".custom_links_following"
+              ).parentElement.remove();
+            }
             const followingLink = document.createElement("a");
-            followingLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Following</span>`;
+            followingLink.innerHTML = `<span class="custom_links custom_links_following"><img src='${Icon}' class='icon_img'/>Following</span>`;
             followingLink.href = `/${userName2.current}/following#following`;
             followingLinkWrapper.parentElement.appendChild(followingLink);
             followingLinkWrapper.parentElement.style.display = "flex";
             followingLinkWrapper.parentElement.style.flexDirection = "row";
-
+            // if (!UserNameDomParent.querySelector(".custom_links_follower")) {
             // const followerLink = document.createElement("a");
-            // followerLink.innerHTML = `<span class="custom_links"><img src='${Icon}' class='icon_img'/>Followers</span>`;
+            // followerLink.innerHTML = `<span class="custom_links custom_links_follower"><img src='${Icon}' class='icon_img'/>Followers</span>`;
             // followerLink.href = `/${userName2.current}/followers#followers`;
             // followerLinkWrapper.parentElement.appendChild(followerLink);
             // followerLinkWrapper.parentElement.style.display = "flex";
             // followerLinkWrapper.parentElement.style.flexDirection = "row";
+            // }
           }
           onceRef.current = true;
         } else {
