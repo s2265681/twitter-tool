@@ -8,6 +8,9 @@
   }
   .drowdown_modal_content {
     box-shadow: 0px 0px 14px 0px rgba(34, 34, 34, 0.2);
+    & > .loading_wrapper {
+      background-color: #fff;
+    }
     &_item {
       background-color: #fff;
       border-bottom: 1px rgba(170, 170, 170, 0.2) solid;
@@ -34,6 +37,9 @@
   }
   .drowdown_modal_content {
     border: 1px solid #787878;
+    & > .loading_wrapper {
+      background-color: #191919;
+    }
     &_item {
       background-color: #191919;
       border-bottom: 1px #787878 solid;

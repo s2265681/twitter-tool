@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import ButtonSvg from "react:./buttomArea.svg";
+import MyLoadingSvg from "react:./loading.svg";
 import "./index.scss";
 
 interface Iprops {
@@ -13,6 +14,7 @@ interface Iprops {
   onSelect: Function;
   className?: string;
   label: string;
+  loading?: boolean;
 }
 const Dropdown = ({
   options = [],
@@ -20,10 +22,13 @@ const Dropdown = ({
   onSelect,
   className,
   label,
+  loading,
 }: Iprops) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [value, setValue] = useState(defaultValue);
-  if (options?.length === 0) return null;
+  // if (options?.length === 0) return null;
+  console.log(options, "options....");
+  console.log(loading, "loading");
   return (
     <div
       className={classNames(
@@ -70,34 +75,40 @@ const Dropdown = ({
           ></div>
           {/* 内容 */}
           <div className="drowdown_modal_content z-[10] w-full absolute top-[8px] rounded-lg h-[228px] overflow-auto">
-            {options.map((item, index) => {
-              return (
-                <div
-                  key={item.label}
-                  onClick={() => {
-                    setVisible(false);
-                    setValue(
-                      item.rightValue
-                        ? item.label + "--" + item.rightValue
-                        : item.label
-                    );
-                    onSelect(item);
-                  }}
-                  className={classNames(
-                    "drowdown_modal_content_item",
-                    "flex justify-between items-center px-[12px] h-[50px] cursor-pointer select-none",
-                    {
-                      drowdown_modal_content_item_selected:
-                        value === item.label,
-                      "!border-b-0": options.length - 1 === index,
-                    }
-                  )}
-                >
-                  <div>{item.label}</div>
-                  <div>{item.rightValue}</div>
-                </div>
-              );
-            })}
+            {loading ? (
+              <div className="loading_wrapper flex w-full h-full justify-center items-center">
+                <MyLoadingSvg className="animate-spin"></MyLoadingSvg>
+              </div>
+            ) : (
+              options.map((item, index) => {
+                return (
+                  <div
+                    key={item.label}
+                    onClick={() => {
+                      setVisible(false);
+                      setValue(
+                        item.rightValue
+                          ? item.label + "--" + item.rightValue
+                          : item.label
+                      );
+                      onSelect(item);
+                    }}
+                    className={classNames(
+                      "drowdown_modal_content_item",
+                      "flex justify-between items-center px-[12px] h-[50px] cursor-pointer select-none",
+                      {
+                        drowdown_modal_content_item_selected:
+                          value === item.label,
+                        "!border-b-0": options.length - 1 === index,
+                      }
+                    )}
+                  >
+                    <div>{item.label}</div>
+                    <div>{item.rightValue}</div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       )}

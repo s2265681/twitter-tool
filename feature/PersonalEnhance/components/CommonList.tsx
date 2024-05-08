@@ -4,9 +4,14 @@ import Filters from "./Filters";
 import List from "./List";
 
 export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
+  console.log(loading, "loading...");
   return (
     <div className="" id="xxx">
-      <Filters filters={filters} setParams={setParams}></Filters>
+      <Filters
+        filters={filters}
+        setParams={setParams}
+        loading={loading}
+      ></Filters>
       {loading && (
         <div className="flex w-full h-[100px] justify-center items-center">
           <MyLoadingSvg className="animate-spin"></MyLoadingSvg>
