@@ -1,0 +1,20 @@
+.triangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 20px solid #404040; /* 这里的颜色可以替换为你想要的颜色 */
+  transform: translate(-50%, 100%);
+}
+.list-container {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list-container:before {
+  content: '●';
+  transform: scale(0.6);
+}
