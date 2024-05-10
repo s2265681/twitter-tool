@@ -5,8 +5,6 @@ import List from "./List";
 import Tooltip from "./Tooltip";
 
 export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
-  console.log(loading, "loading...");
-
   const avatarArr = [
     {
       title: "@Rockshang",
