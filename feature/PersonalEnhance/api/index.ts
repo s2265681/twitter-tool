@@ -1,15 +1,5 @@
-const mainhost = "http://107.182.191.234:5001";
-const get_filter_info = ({
-  screen_name,
-  follow_category,
-}: {
-  screen_name: string;
-  follow_category: "followers" | "following";
-}) => {
-  return fetch(
-    `${mainhost}/get_filter_info?screen_name=${screen_name}&follow_category=${follow_category}`
-  ).then((response) => response.json());
-};
+const mainhost = "http://198.181.37.232:5001"; //
+// const mainhost = "http://107.182.191.234:5001";
 
 const get_user_info_list = ({
   screen_name,
@@ -34,6 +24,7 @@ const get_user_info_list = ({
   ).then((response) => response.json());
 };
 
+// 带search功能的先去掉
 const get_search_user_info_list = ({
   text = "",
   follow_category,
@@ -57,4 +48,73 @@ const get_search_user_info_list = ({
   ).then((response) => response.json());
 };
 
-export { get_filter_info, get_user_info_list, get_search_user_info_list };
+const search_user_info = ({ screen_name }: { screen_name: string }) => {
+  return fetch(`${mainhost}/search_user_info?screen_name=${screen_name}`).then(
+    (response) => response.json()
+  );
+};
+
+const get_filter_info = ({
+  screen_name,
+  follow_category,
+}: {
+  screen_name: string;
+  follow_category: "followers" | "following";
+}) => {
+  return fetch(
+    `${mainhost}/get_filter_info?screen_name=${screen_name}&follow_category=${follow_category}`
+  ).then((response) => response.json());
+};
+
+const get_compute_user_interact = ({
+  screen_name = "",
+  follow_category,
+  created_at = "All",
+  followers = "All",
+  following = "All",
+  cursor = 1,
+  interact_ids,
+}: {
+  screen_name: string;
+  follow_category: "followers" | "following";
+  created_at: string;
+  followers: string;
+  following: string;
+  cursor: number;
+  interact_ids: string;
+}) => {
+  let _followers_count = followers === "All" ? "" : followers;
+  let _following_count = following === "All" ? "" : following;
+  let _created_at = created_at === "All" ? "" : created_at;
+  return fetch(
+    `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&created_at=${_created_at}&followers_count=${_followers_count}&following_count=${_following_count}&cursor=${cursor}&interact_ids=${interact_ids}`
+  ).then((response) => response.json());
+};
+
+const export_user_interact = ({
+  screen_name = "",
+  created_at = "All",
+  followers = "All",
+  following = "All",
+  interact_ids,
+}: {
+  screen_name: string;
+  follow_category: "followers" | "following";
+  created_at: string;
+  followers: string;
+  following: string;
+  interact_ids: string;
+}) => {
+  return fetch(
+    `${mainhost}/export_user_interact?screen_name=${screen_name}&created_at=${created_at}&followers_count=${followers}&following_count=${following}&interact_ids=${interact_ids}`
+  ).then((response) => response.json());
+};
+
+export {
+  get_filter_info,
+  get_user_info_list,
+  get_search_user_info_list,
+  search_user_info,
+  get_compute_user_interact,
+  export_user_interact,
+};

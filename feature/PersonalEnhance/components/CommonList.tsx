@@ -21,7 +21,7 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
   ];
   return (
     <div className="" id="xxx">
-      <div className="p-4 m-3 flex items-center relative left-[100px]">
+      {/* <div className="p-4 m-3 flex items-center relative left-[100px]">
         {avatarArr.map((item, index) => {
           return (
             <div className="" key={item.title}>
@@ -37,7 +37,7 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
             </div>
           );
         })}
-      </div>
+      </div> */}
 
       <Filters
         filters={filters}

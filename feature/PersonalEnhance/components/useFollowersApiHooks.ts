@@ -37,10 +37,10 @@ export const useFollowersApiHooks = ({ isCanRender }) => {
       },
       response: ({ data }) => {
         const newFilters = {};
-        const { created_at, followers, followering } = data;
+        const { created_at, followers, following } = data;
         newFilters["created_at"] = handleFilterObj(created_at);
         newFilters["followers"] = handleFilterObj(followers);
-        newFilters["following"] = handleFilterObj(followering);
+        newFilters["following"] = handleFilterObj(following);
         setFilters(newFilters);
       },
     });
@@ -48,12 +48,12 @@ export const useFollowersApiHooks = ({ isCanRender }) => {
 
   useEffect(() => {
     if (!isCanRender) return;
-    const searchParams = params["text"];
+    const searchParams = params["interact_ids"];
     if (pageNo === 1) {
       setLoading(true);
     }
     senChomeMessage({
-      action: searchParams ? "get_search_user_info_list" : "get_user_info_list",
+      action: searchParams ? "get_compute_user_interact" : "get_user_info_list",
       params: {
         screen_name: getUserName() || "ethereum",
         cursor: pageNo || 1,

@@ -13,9 +13,15 @@ import {
 } from "./utils";
 import "./index.scss";
 import { clearLastSelection } from "~utils";
-import { useFollowersApiHooks } from "./components/useFollowersApiHooks";
+// import { useFollowersApiHooks } from "./components/useFollowersApiHooks";
 
-const PersonlEnhance = ({ followersParams, followeringParams }) => {
+const PersonlEnhance = ({
+  followersParams,
+  followeringParams,
+}: {
+  followersParams?: any;
+  followeringParams;
+}) => {
   const { renderCardContent } = useRenderDomHelpHooks();
   const localPath = getLocationPathName();
 
@@ -27,9 +33,9 @@ const PersonlEnhance = ({ followersParams, followeringParams }) => {
       className="flex justify-around  relative bg-theme_bg w-full"
       id="custom_card"
     >
-      {$FOLLOWERS === localPath && (
+      {/* {$FOLLOWERS === localPath && (
         <Followers followersParams={followersParams}></Followers>
-      )}
+      )} */}
       {$FOLLOWING === localPath && (
         <Followering followeringParams={followeringParams}></Followering>
       )}
@@ -74,8 +80,8 @@ const PersonlEnhanceWrapper = () => {
     };
   }, []);
 
-  const followersParams = useFolloweringApiHooks({ isCanRender });
-  const followeringParams = useFollowersApiHooks({ isCanRender });
+  const followeringParams = useFolloweringApiHooks({ isCanRender });
+  // const followersParams = useFollowersApiHooks({ isCanRender });
 
   useRenderUserLink();
 
@@ -85,7 +91,7 @@ const PersonlEnhanceWrapper = () => {
 
   return (
     <PersonlEnhance
-      followersParams={followersParams}
+      // followersParams={followersParams}
       followeringParams={followeringParams}
     ></PersonlEnhance>
   );
