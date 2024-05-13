@@ -3,7 +3,7 @@ import Dropdown from "../../../components/Dropdown";
 import { created_at, followers_count, following_count } from "../config";
 import React, { useRef, useState } from "react";
 import CloseSvg from "react:./close.svg";
-import { senChomeMessage } from "~utils";
+import { downloadFile, senChomeMessage } from "~utils";
 
 export default ({ filters, setParams, loading }) => {
   console.log(filters, "ddddd");
@@ -58,7 +58,7 @@ export default ({ filters, setParams, loading }) => {
 const SearchInput = ({ setParams }) => {
   const inputRef = useRef(null);
   const [users, setUsers] = useState<string[]>([]);
-  const [interact_ids, setInteract_ids] = useState(["1019296470942375936"]);
+  const [interact_ids, setInteract_ids] = useState(["232180841"]);
   // solana
 
   console.log(interact_ids, "interact_ids");
@@ -92,7 +92,9 @@ const SearchInput = ({ setParams }) => {
         <div
           className="text-white bg-[#1E9CF1] w-[76px] h-[34px] flex justify-center items-center rounded cursor-pointer ml-2"
           onClick={() => {
-            if (users.length < 10 && inputRef.current.value) {
+            console.log(users, "users");
+            console.log(inputRef.current.value, "inputRef.current.value1111");
+            if (users.length < 10) {
               console.log(inputRef.current.value, "curretn,,,,11,");
               setUsers([...users, inputRef.current.value]);
               setParams((_params) => ({
@@ -101,7 +103,6 @@ const SearchInput = ({ setParams }) => {
               }));
             }
             inputRef.current.value = "";
-            console.log(users, "users......");
           }}
         >
           search
@@ -109,25 +110,22 @@ const SearchInput = ({ setParams }) => {
         <div
           className="text-white bg-[#1E9CF1] w-[76px] h-[34px] flex justify-center items-center rounded cursor-pointer"
           onClick={() => {
-            console.log("导出");
-
             senChomeMessage({
               action: "export_user_interact",
               params: {
                 screen_name: "solana",
-                created_at: "All",
-                followers: "All",
-                following: "All",
+                created_at: "",
+                followers: "",
+                following: "",
                 interact_ids: interact_ids.join(","),
               },
-              response: ({ data }) => {
-                interact_ids.push(data);
-                setInteract_ids([...interact_ids]);
+              response: (data) => {
+                console.log("导出成功", data);
               },
             });
           }}
         >
-          expore
+          export
         </div>
       </div>
       {/* 搜索词的模块 */}

@@ -1,5 +1,32 @@
 const mainhost = "http://198.181.37.232:5001"; //
 // const mainhost = "http://107.182.191.234:5001";
+// const get_user_info_list = ({
+//   screen_name,
+//   follow_category,
+//   created_at = "",
+//   followers = "",
+//   following = "",
+//   cursor = 1,
+// }: {
+//   screen_name: string;
+//   follow_category: "followers" | "following";
+//   created_at: string;
+//   followers: string;
+//   following: string;
+//   cursor: number;
+// }) => {
+//   let fetchUrl = `${mainhost}/get_user_info_list?screen_name=${screen_name}`;
+//   if (followers) {
+//     fetchUrl += "&followers_count=" + followers;
+//   }
+//   if (following) {
+//     fetchUrl += "&following_count=" + following;
+//   }
+//   if (created_at) {
+//     fetchUrl += "&created_at=" + created_at;
+//   }
+//   return fetch(fetchUrl).then((response) => response.json());
+// };
 
 const get_user_info_list = ({
   screen_name,
@@ -69,9 +96,9 @@ const get_filter_info = ({
 const get_compute_user_interact = ({
   screen_name = "",
   follow_category,
-  created_at = "All",
-  followers = "All",
-  following = "All",
+  created_at = "",
+  followers = "",
+  following = "",
   cursor = 1,
   interact_ids,
 }: {
@@ -83,19 +110,27 @@ const get_compute_user_interact = ({
   cursor: number;
   interact_ids: string;
 }) => {
-  let _followers_count = followers === "All" ? "" : followers;
-  let _following_count = following === "All" ? "" : following;
-  let _created_at = created_at === "All" ? "" : created_at;
-  return fetch(
-    `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&created_at=${_created_at}&followers_count=${_followers_count}&following_count=${_following_count}&cursor=${cursor}&interact_ids=${interact_ids}`
-  ).then((response) => response.json());
+  let fetchUrl = `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&cursor=${cursor}`;
+  if (followers) {
+    fetchUrl += "&followers_count=" + followers;
+  }
+  if (following) {
+    fetchUrl += "&following_count=" + following;
+  }
+  if (created_at) {
+    fetchUrl += "&created_at=" + created_at;
+  }
+  if (interact_ids) {
+    fetchUrl += "&interact_ids=" + interact_ids;
+  }
+  return fetch(fetchUrl).then((response) => response.json());
 };
 
 const export_user_interact = ({
   screen_name = "",
-  created_at = "All",
-  followers = "All",
-  following = "All",
+  created_at = "",
+  followers = "",
+  following = "",
   interact_ids,
 }: {
   screen_name: string;
@@ -105,9 +140,20 @@ const export_user_interact = ({
   following: string;
   interact_ids: string;
 }) => {
-  return fetch(
-    `${mainhost}/export_user_interact?screen_name=${screen_name}&created_at=${created_at}&followers_count=${followers}&following_count=${following}&interact_ids=${interact_ids}`
-  ).then((response) => response.json());
+  let fetchUrl = `${mainhost}/export_user_interact?screen_name=${screen_name}`;
+  if (followers) {
+    fetchUrl += "&followers_count=" + followers;
+  }
+  if (following) {
+    fetchUrl += "&following_count=" + following;
+  }
+  if (created_at) {
+    fetchUrl += "&created_at=" + created_at;
+  }
+  if (interact_ids) {
+    fetchUrl += "&interact_ids=" + interact_ids;
+  }
+  return fetch(fetchUrl).then((response) => response.json());
 };
 
 export {

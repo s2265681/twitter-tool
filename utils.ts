@@ -86,3 +86,20 @@ export function clearLastSelection() {
     }
   }
 }
+
+// 创建一个下载文件的函数
+export function downloadFile(url) {
+  // 创建一个a标签
+  var link = document.createElement("a");
+  // 设置a标签的href属性为文件的URL
+  link.href = url;
+  link.target = "_blank";
+  // 添加download属性，告诉浏览器这是一个下载链接
+  // link.download = "";
+  // 将a标签添加到页面中
+  document.body.appendChild(link);
+  // 触发a标签的点击事件
+  link.click();
+  // 移除a标签，清理页面
+  document.body.removeChild(link);
+}

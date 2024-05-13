@@ -12,7 +12,9 @@ console.log(
 );
 
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: "https://twitter.com/soulscancom" });
+  chrome.tabs.create({
+    url: "https://twitter.com/soulscancom",
+  });
 });
 
 // 监听来自content script的消息
@@ -82,11 +84,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
   if (request.action === "export_user_interact") {
     try {
-      export_user_interact(request.params)
-        .then((data) => {
-          sendResponse({ data: data });
-        })
-        .catch((error) => console.log(error));
+      chrome.tabs.create({
+        url: "http://198.181.37.232:5001/export_user_interact?screen_name=solana&interact_ids=232180841&created_at=2018",
+      });
+      sendResponse("success");
     } catch (error) {
       console.log(error);
     }
