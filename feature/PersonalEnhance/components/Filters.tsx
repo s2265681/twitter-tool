@@ -3,10 +3,10 @@ import Dropdown from "../../../components/Dropdown";
 import { created_at, followers_count, following_count } from "../config";
 import React, { useRef, useState } from "react";
 import CloseSvg from "react:./close.svg";
-import { downloadFile, senChomeMessage } from "~utils";
+import { downloadFile, getUserName, senChomeMessage } from "~utils";
+import { message } from "antd";
 
 export default ({ filters, setParams, loading }) => {
-  console.log(filters, "ddddd");
   return (
     <div className="px-4 my-5">
       <SearchInput setParams={setParams}></SearchInput>
@@ -57,20 +57,37 @@ export default ({ filters, setParams, loading }) => {
 
 const SearchInput = ({ setParams }) => {
   const inputRef = useRef(null);
-  const [users, setUsers] = useState<string[]>([]);
-  const [interact_ids, setInteract_ids] = useState(["232180841"]);
-  // solana
+  const [usersInfo, setUsersInfo] = useState<
+    { id: string; screen_name: string }[]
+  >([]);
+  // solana // TheMotre
 
-  console.log(interact_ids, "interact_ids");
+  const interact_idsStr = () => {
+    return usersInfo.map((el) => el.id).join(",");
+  };
+
   const searchUserInfo = (screen_name) => {
+    if (!screen_name) return;
     senChomeMessage({
       action: "search_user_info",
       params: {
         screen_name: screen_name,
       },
       response: ({ data }) => {
-        interact_ids.push(data);
-        setInteract_ids([...interact_ids]);
+        setUsersInfo((_usersInfo) => {
+          let newUserInfo = [];
+          _usersInfo.map((el) => {
+            if (el.screen_name === screen_name && data.id) {
+              newUserInfo.push({
+                screen_name,
+                id: data.id,
+              });
+            } else {
+              newUserInfo.push(el);
+            }
+          });
+          return newUserInfo;
+        });
       },
     });
   };
@@ -82,27 +99,50 @@ const SearchInput = ({ setParams }) => {
           inputRef={inputRef}
           placeholder="input no more than 10@"
           onChange={(value) => {
-            if (users.length < 10) {
-              setUsers([...users, value]);
-              searchUserInfo(value);
+            if (usersInfo.length < 10) {
+              if (inputRef.current.value) {
+                setUsersInfo([
+                  ...usersInfo,
+                  {
+                    screen_name: inputRef.current.value,
+                    id: "",
+                  },
+                ]);
+                setTimeout(() => {
+                  searchUserInfo(value);
+                  inputRef.current.value = "";
+                }, 10);
+              }
+            } else {
+              message.error("input no more than 10@");
             }
-            inputRef.current.value = "";
           }}
         ></Input>
         <div
           className="text-white bg-[#1E9CF1] w-[76px] h-[34px] flex justify-center items-center rounded cursor-pointer ml-2"
           onClick={() => {
-            console.log(users, "users");
-            console.log(inputRef.current.value, "inputRef.current.value1111");
-            if (users.length < 10) {
-              console.log(inputRef.current.value, "curretn,,,,11,");
-              setUsers([...users, inputRef.current.value]);
-              setParams((_params) => ({
-                ..._params,
-                interact_ids: interact_ids.join(","),
-              }));
+            if (usersInfo.length < 10) {
+              if (inputRef.current.value) {
+                setUsersInfo([
+                  ...usersInfo,
+                  {
+                    screen_name: inputRef.current.value,
+                    id: "",
+                  },
+                ]);
+                setTimeout(() => {
+                  searchUserInfo(inputRef.current.value);
+                  inputRef.current.value = "";
+                }, 10);
+              }
+              setTimeout(() => {
+                setParams((_params) => ({
+                  ..._params,
+                  interact_ids: interact_idsStr(),
+                }));
+                message.destroy();
+              }, 1000);
             }
-            inputRef.current.value = "";
           }}
         >
           search
@@ -110,17 +150,19 @@ const SearchInput = ({ setParams }) => {
         <div
           className="text-white bg-[#1E9CF1] w-[76px] h-[34px] flex justify-center items-center rounded cursor-pointer"
           onClick={() => {
+            message.loading("loading...");
             senChomeMessage({
               action: "export_user_interact",
               params: {
-                screen_name: "solana",
+                screen_name: getUserName() || "solana",
                 created_at: "",
                 followers: "",
                 following: "",
-                interact_ids: interact_ids.join(","),
+                interact_ids: interact_idsStr(),
               },
               response: (data) => {
-                console.log("导出成功", data);
+                message.destroy();
+                message.success("export success!");
               },
             });
           }}
@@ -129,22 +171,26 @@ const SearchInput = ({ setParams }) => {
         </div>
       </div>
       {/* 搜索词的模块 */}
-      {users.length > 0 && (
+      {usersInfo.length > 0 && (
         <div className="flex w-full flex-wrap gap-[10px] my-4">
-          {users.map((el) => {
+          {usersInfo.map((user) => {
             return (
               <div
-                key={el}
+                key={user.id}
                 className="w-fit gap-3 px-3 py-3 rounded-xl flex justify-between bg-[rgba(255,197,139,0.2)] items-center"
               >
-                <div className="text-[#F17F0B] text-[12px]">{el}</div>
+                {user.screen_name && (
+                  <div className="text-[#F17F0B] text-[12px]">
+                    {user.screen_name}
+                  </div>
+                )}
                 <CloseSvg
                   className="flex-none cursor-pointer"
                   onClick={() => {
-                    const newUser = users.filter((item) => item !== el);
-                    console.log(newUser, "newUser...");
-                    setUsers(newUser);
-                    // setInteract_ids([...interact_ids]);
+                    const newUsersInfo = usersInfo.filter(
+                      (item) => item.id !== user.id
+                    );
+                    setUsersInfo(newUsersInfo);
                   }}
                 ></CloseSvg>
               </div>

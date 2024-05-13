@@ -1,3 +1,4 @@
+import { error } from "console";
 import {
   CUSTOM_CARD_KEY,
   setOriginTabSelectedStyle,
@@ -37,15 +38,19 @@ export function findLastSpan(element) {
 }
 
 export function senChomeMessage({ action, params, response }) {
-  chrome.runtime.sendMessage(
-    {
-      action,
-      params,
-    },
-    (res) => {
-      response(res);
-    }
-  );
+  try {
+    chrome.runtime.sendMessage(
+      {
+        action,
+        params,
+      },
+      (res) => {
+        response(res);
+      }
+    );
+  } catch (error) {
+    console.log(error, "errorppppp");
+  }
 }
 
 export function handleFilterObj(arr: string[]) {

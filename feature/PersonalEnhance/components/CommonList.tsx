@@ -19,6 +19,11 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
       src: "https://d149xzut2sq6e3.cloudfront.net/upload/76d207b8.png",
     },
   ];
+
+  const newData = Array.isArray(dataSource)
+    ? dataSource
+    : dataSource?.user_info_list || [];
+
   return (
     <div className="" id="xxx">
       {/* <div className="p-4 m-3 flex items-center relative left-[100px]">
@@ -50,7 +55,7 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
         </div>
       )}
       {!loading && <List dataSource={dataSource} setPageNo={setPageNo}></List>}
-      {!loading && dataSource?.user_info_list?.length === 0 && (
+      {!loading && newData?.length === 0 && (
         <div className="text-center font-extrabold text-[31px]">No Data</div>
       )}
     </div>

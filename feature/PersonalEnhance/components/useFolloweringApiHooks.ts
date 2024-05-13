@@ -51,7 +51,6 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
     if (!isCanRender) return;
     const searchParams = params["interact_ids"];
 
-    console.log(params, "params");
     if (pageNo === 1) {
       setLoading(true);
     }

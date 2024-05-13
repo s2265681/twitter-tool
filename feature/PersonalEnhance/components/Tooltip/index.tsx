@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./style.scss";
 import React from "react";
 import ArrowSvg from "react:./arrow.svg";
+import { createPortal } from "react-dom";
 
 export default ({ children, title }) => {
   const [open, setOpen] = useState(false);
@@ -10,15 +11,19 @@ export default ({ children, title }) => {
 
   useEffect(() => {
     if (targetEle.current) {
-      const { x, y, width, height } = targetEle.current.getBoundingClientRect();
-      const targetLeftPoint = x + width / 2;
-      const targetTopPoint = y + height + 8;
-      setPosition({
-        x: targetLeftPoint,
-        y: targetTopPoint,
-      });
+      calcPosition();
     }
   }, [targetEle.current]);
+
+  const calcPosition = () => {
+    const { x, y, width, height } = targetEle.current.getBoundingClientRect();
+    const targetLeftPoint = x + width / 2;
+    const targetTopPoint = y + height + 8;
+    setPosition({
+      x: targetLeftPoint,
+      y: targetTopPoint,
+    });
+  };
 
   const handleClick = useCallback(() => {
     console.log("click.....");
@@ -29,12 +34,14 @@ export default ({ children, title }) => {
       children,
       (child) => child.props.style
     );
-    console.log(childStyles);
     return React.cloneElement(children, {
       onClick: handleClick,
       style: { ...childStyles[0], cursor: "pointer" },
       ref: targetEle,
-      onMouseEnter: () => setOpen(true),
+      onMouseEnter: () => {
+        calcPosition();
+        setOpen(true);
+      },
       onMouseLeave: () => setOpen(false),
     });
   }, [children]);
@@ -42,24 +49,26 @@ export default ({ children, title }) => {
   return (
     <div className="relative">
       {finalChildren}
-      {open && (
-        <div
-          className="tip fixed w-fit px-3 py-1 h-[30px] bg-[#1D2129] rounded-sm "
-          style={{
-            top: position.y + "px",
-            left: position.x + "px",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <div className="text-white text-[14px]">{title}</div>
-          <ArrowSvg
-            className=" absolute left-1/2 top-0"
+      {open &&
+        createPortal(
+          <div
+            className="tip fixed w-fit px-3 py-1 h-[30px] bg-[#1D2129] rounded-sm "
             style={{
-              transform: "translate(-50%, -4px)",
+              top: position.y + "px",
+              left: position.x + "px",
+              transform: "translateX(-50%)",
             }}
-          ></ArrowSvg>
-        </div>
-      )}
+          >
+            <div className="text-white text-[14px]">{title}</div>
+            <ArrowSvg
+              className=" absolute left-1/2 top-0"
+              style={{
+                transform: "translate(-50%, -4px)",
+              }}
+            ></ArrowSvg>
+          </div>,
+          document.body
+        )}
     </div>
   );
 };

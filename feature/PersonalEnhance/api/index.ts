@@ -126,41 +126,10 @@ const get_compute_user_interact = ({
   return fetch(fetchUrl).then((response) => response.json());
 };
 
-const export_user_interact = ({
-  screen_name = "",
-  created_at = "",
-  followers = "",
-  following = "",
-  interact_ids,
-}: {
-  screen_name: string;
-  follow_category: "followers" | "following";
-  created_at: string;
-  followers: string;
-  following: string;
-  interact_ids: string;
-}) => {
-  let fetchUrl = `${mainhost}/export_user_interact?screen_name=${screen_name}`;
-  if (followers) {
-    fetchUrl += "&followers_count=" + followers;
-  }
-  if (following) {
-    fetchUrl += "&following_count=" + following;
-  }
-  if (created_at) {
-    fetchUrl += "&created_at=" + created_at;
-  }
-  if (interact_ids) {
-    fetchUrl += "&interact_ids=" + interact_ids;
-  }
-  return fetch(fetchUrl).then((response) => response.json());
-};
-
 export {
   get_filter_info,
   get_user_info_list,
   get_search_user_info_list,
   search_user_info,
   get_compute_user_interact,
-  export_user_interact,
 };

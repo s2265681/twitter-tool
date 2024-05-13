@@ -1,5 +1,4 @@
 import {
-  export_user_interact,
   get_compute_user_interact,
   get_filter_info,
   get_search_user_info_list,
@@ -83,9 +82,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 
   if (request.action === "export_user_interact") {
+    const { screen_name, followers, following, created_at, interact_ids } =
+      request.params;
+    let fetchUrl = `http://198.181.37.232:5001/export_user_interact?screen_name=${screen_name}`;
+    if (followers) {
+      fetchUrl += "&followers_count=" + followers;
+    }
+    if (following) {
+      fetchUrl += "&following_count=" + following;
+    }
+    if (created_at) {
+      fetchUrl += "&created_at=" + created_at;
+    }
+    if (interact_ids) {
+      fetchUrl += "&interact_ids=" + interact_ids;
+    }
     try {
       chrome.tabs.create({
-        url: "http://198.181.37.232:5001/export_user_interact?screen_name=solana&interact_ids=232180841&created_at=2018",
+        url: fetchUrl,
       });
       sendResponse("success");
     } catch (error) {

@@ -27,8 +27,6 @@ const Dropdown = ({
   const [visible, setVisible] = useState<boolean>(false);
   const [value, setValue] = useState(defaultValue);
   // if (options?.length === 0) return null;
-  console.log(options, "options....");
-  console.log(loading, "loading");
   return (
     <div
       className={classNames(

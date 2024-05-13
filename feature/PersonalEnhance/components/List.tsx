@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
+import Tooltip from "./Tooltip";
 
 export default ({ dataSource, setPageNo }) => {
-  const data = Array.isArray(dataSource?.user_info_list)
-    ? dataSource?.user_info_list
-    : dataSource?.user_info_list.user_info_list || [];
-  const cursor = dataSource.cursor || 1;
-  const total = dataSource.total;
+  const data = Array.isArray(dataSource)
+    ? dataSource
+    : Array.isArray(dataSource?.user_info_list)
+      ? dataSource?.user_info_list
+      : dataSource?.user_info_list.user_info_list || [];
+  const cursor = dataSource?.cursor || 1;
+  const total = dataSource?.total;
   const loadMore = data.length < total;
-
   useEffect(() => {
     const reload_page = document.querySelector("#reload_page");
     if (!reload_page) return;
@@ -44,10 +46,34 @@ export default ({ dataSource, setPageNo }) => {
                 className="w-[40px] h-[40px] rounded-full flex-none"
               ></img>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 relative">
               <div className=" font-semibold text_theme_text">{item.name}</div>
               <div className="text_theme_subText">@{item.screen_name}</div>
               <div className="text_theme_text">{item.description}</div>
+              <div className="absolute top-3 right-3">
+                {item?.following_screen_name_list &&
+                  item?.following_screen_name_list.map((nameitem, index) => {
+                    return (
+                      <div className="" key={nameitem.name}>
+                        <Tooltip title={nameitem.name}>
+                          <img
+                            className={`avatar relative z-[${item?.following_screen_name_list.length - index}]`}
+                            src={nameitem.src}
+                            style={{
+                              left: -index * 8 + "px",
+                            }}
+                            onClick={() => {
+                              window.open(
+                                location.origin + "/" + nameitem.screen_name,
+                                "_blank"
+                              );
+                            }}
+                          ></img>
+                        </Tooltip>
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
           </div>
         );
