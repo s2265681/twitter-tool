@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Tooltip from "./Tooltip";
+import { parseHtml } from "~utils";
 
 export default ({ dataSource, setPageNo }) => {
   const data = Array.isArray(dataSource)
@@ -28,16 +29,25 @@ export default ({ dataSource, setPageNo }) => {
     };
   }, [cursor]);
 
+  const handleContainerClick = (event) => {
+    // 检查点击的目标是否为<a>标签
+    if (event.target.tagName === "A") {
+      // 执行你想要的操作，比如阻止事件冒泡
+      event.stopPropagation();
+    }
+  };
+
   if (!data.length) return null;
   return (
     <div className="relative pb-[30px]">
       {data?.map((item, index) => {
         return (
           <div
-            className="cursor-pointer py-3 hover:bg-[#00000008] flex gap-2 items-start px-4  transform transition duration-200"
+            className="cursor-pointer py-3 hover:bg-[#00000008] flex gap-2 items-start px-4  transform transition duration-200 overflow-hidden"
             key={index}
             onClick={() => {
-              window.open(location.origin + "/" + item.screen_name, "_blank");
+              console.log("open....");
+              // window.open(location.origin + "/" + item.screen_name, "_blank");
             }}
           >
             <div className="w-[40px] h-[40px] rounded-full flex-none">
@@ -49,7 +59,13 @@ export default ({ dataSource, setPageNo }) => {
             <div className="flex flex-col gap-1 relative">
               <div className=" font-semibold text_theme_text">{item.name}</div>
               <div className="text_theme_subText">@{item.screen_name}</div>
-              <div className="text_theme_text">{item.description}</div>
+              <div
+                className="text_theme_text"
+                dangerouslySetInnerHTML={{
+                  __html: parseHtml(item.description),
+                }}
+                onClick={handleContainerClick}
+              ></div>
               <div className="absolute top-3 right-3">
                 {item?.following_screen_name_list &&
                   item?.following_screen_name_list.map((nameitem, index) => {

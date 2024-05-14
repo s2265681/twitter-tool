@@ -108,3 +108,18 @@ export function downloadFile(url) {
   // 移除a标签，清理页面
   document.body.removeChild(link);
 }
+
+export const parseHtml = (string) => {
+  let result = "";
+  result = string
+    .replace(/@([^ ]+)/g, (a, b, c) => {
+      return `<a href="/${b}" class="link">${a}</a>`;
+    })
+    .replace(/#([^ ]+)/g, (a, b, c) => {
+      return `<a href="/search?q=%23${b}&src=hashtag_click" class="link">${a}</a>`;
+    })
+    .replace(/http([^ ]+)/g, (a, b, c) => {
+      return `<a href="${a}" class="link" target="_blank">${a}</a>`;
+    });
+  return result || "";
+};
