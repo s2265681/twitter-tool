@@ -1,7 +1,7 @@
 import Input from "~components/Input";
 import Dropdown from "../../../components/Dropdown";
 import { created_at, followers_count, following_count } from "../config";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CloseSvg from "react:./close.svg";
 import { downloadFile, getUserName, senChomeMessage } from "~utils";
 import { message } from "antd";
@@ -60,13 +60,14 @@ const SearchInput = ({ setParams }) => {
   const [usersInfo, setUsersInfo] = useState<
     { id: string; screen_name: string }[]
   >([]);
+  const [forceUpdate, setForceUpdate] = useState(null);
   // solana // TheMotre
 
   const interact_idsStr = () => {
     return usersInfo.map((el) => el.id).join(",");
   };
 
-  const searchUserInfo = (screen_name) => {
+  const searchUserInfo = (screen_name, isSearch) => {
     if (!screen_name) return;
     const handleScreen_name = screen_name.replace("@", "");
     senChomeMessage({
@@ -74,8 +75,8 @@ const SearchInput = ({ setParams }) => {
       params: {
         screen_name: handleScreen_name,
       },
-      response: ({ data }) => {
-        setUsersInfo((_usersInfo) => {
+      response: async ({ data }) => {
+        await setUsersInfo((_usersInfo) => {
           let newUserInfo = [];
           _usersInfo.map((el) => {
             if (el.screen_name === handleScreen_name && data.id) {
@@ -89,9 +90,33 @@ const SearchInput = ({ setParams }) => {
           });
           return newUserInfo;
         });
+        if (isSearch) setForceUpdate(new Date().toString().slice(10));
       },
     });
   };
+
+  useEffect(() => {
+    if (forceUpdate) {
+      console.log(usersInfo, "usersInfo..");
+      console.log(interact_idsStr(), "interact_idsStr()");
+      setParams((_params) => ({
+        ..._params,
+        interact_ids: interact_idsStr(),
+      }));
+    }
+  }, [forceUpdate]);
+
+  useEffect(() => {
+    // 首次进入需要将当前用户进行写入
+    setUsersInfo([
+      ...usersInfo,
+      {
+        screen_name: getUserName(),
+        id: "",
+      },
+    ]);
+    searchUserInfo(getUserName(), true);
+  }, []);
 
   return (
     <div>
@@ -110,7 +135,7 @@ const SearchInput = ({ setParams }) => {
                   },
                 ]);
                 setTimeout(() => {
-                  searchUserInfo(value);
+                  searchUserInfo(value, false);
                   inputRef.current.value = "";
                 }, 10);
               }
@@ -132,17 +157,13 @@ const SearchInput = ({ setParams }) => {
                   },
                 ]);
                 setTimeout(() => {
-                  searchUserInfo(inputRef.current.value);
+                  searchUserInfo(inputRef.current.value, true);
                   inputRef.current.value = "";
                 }, 10);
+              } else {
+                // 没有值也要搜索
+                setForceUpdate(new Date().toString().slice(10));
               }
-              setTimeout(() => {
-                setParams((_params) => ({
-                  ..._params,
-                  interact_ids: interact_idsStr(),
-                }));
-                message.destroy();
-              }, 1000);
             }
           }}
         >
@@ -174,7 +195,7 @@ const SearchInput = ({ setParams }) => {
       {/* 搜索词的模块 */}
       {usersInfo.length > 0 && (
         <div className="flex w-full flex-wrap gap-[10px] my-4">
-          {usersInfo.map((user) => {
+          {usersInfo.map((user, index) => {
             return (
               <div
                 key={user.id}
@@ -185,15 +206,17 @@ const SearchInput = ({ setParams }) => {
                     @{user.screen_name}
                   </div>
                 )}
-                <CloseSvg
-                  className="flex-none cursor-pointer"
-                  onClick={() => {
-                    const newUsersInfo = usersInfo.filter(
-                      (item) => item.id !== user.id
-                    );
-                    setUsersInfo(newUsersInfo);
-                  }}
-                ></CloseSvg>
+                {index !== 0 && (
+                  <CloseSvg
+                    className="flex-none cursor-pointer"
+                    onClick={() => {
+                      const newUsersInfo = usersInfo.filter(
+                        (item) => item.id !== user.id
+                      );
+                      setUsersInfo(newUsersInfo);
+                    }}
+                  ></CloseSvg>
+                )}
               </div>
             );
           })}

@@ -110,7 +110,6 @@ const get_compute_user_interact = ({
   cursor: number;
   interact_ids: string;
 }) => {
-  console.log(interact_ids, "interact_ids");
   let fetchUrl = `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&cursor=${cursor}&interact_ids=${interact_ids}`;
   if (followers) {
     followers = followers.replace("~", "_");
