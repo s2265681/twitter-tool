@@ -46,8 +46,7 @@ export default ({ dataSource, setPageNo }) => {
             className="cursor-pointer py-3 hover:bg-[#00000008] flex gap-2 items-start px-4  transform transition duration-200 overflow-hidden"
             key={index}
             onClick={() => {
-              console.log("open....");
-              // window.open(location.origin + "/" + item.screen_name, "_blank");
+              window.open(location.origin + "/" + item.screen_name, "_blank");
             }}
           >
             <div className="w-[40px] h-[40px] rounded-full flex-none">

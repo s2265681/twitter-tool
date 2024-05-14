@@ -110,21 +110,19 @@ const get_compute_user_interact = ({
   cursor: number;
   interact_ids: string;
 }) => {
-  let fetchUrl = `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&cursor=${cursor}`;
+  console.log(interact_ids, "interact_ids");
+  let fetchUrl = `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&cursor=${cursor}&interact_ids=${interact_ids}`;
   if (followers) {
     followers = followers.replace("~", "_");
-    fetchUrl += "&followers_count=" + followers === "All" ? "" : followers;
+    fetchUrl += "&followers_count=" + (followers === "All") ? "" : followers;
   }
   if (following) {
     following = following.replace("~", "_");
-    fetchUrl += "&following_count=" + following === "All" ? "" : following;
+    fetchUrl += "&following_count=" + (following === "All") ? "" : following;
   }
   if (created_at) {
     created_at = created_at.replace("~", "_");
-    fetchUrl += "&created_at=" + created_at === "All" ? "" : created_at;
-  }
-  if (interact_ids) {
-    fetchUrl += "&interact_ids=" + interact_ids === "All" ? "" : interact_ids;
+    fetchUrl += "&created_at=" + (created_at === "All") ? "" : created_at;
   }
   return fetch(fetchUrl).then((response) => response.json());
 };

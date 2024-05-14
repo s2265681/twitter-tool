@@ -68,18 +68,19 @@ const SearchInput = ({ setParams }) => {
 
   const searchUserInfo = (screen_name) => {
     if (!screen_name) return;
+    const handleScreen_name = screen_name.replace("@", "");
     senChomeMessage({
       action: "search_user_info",
       params: {
-        screen_name: screen_name,
+        screen_name: handleScreen_name,
       },
       response: ({ data }) => {
         setUsersInfo((_usersInfo) => {
           let newUserInfo = [];
           _usersInfo.map((el) => {
-            if (el.screen_name === screen_name && data.id) {
+            if (el.screen_name === handleScreen_name && data.id) {
               newUserInfo.push({
-                screen_name,
+                screen_name: handleScreen_name,
                 id: data.id,
               });
             } else {
@@ -181,7 +182,7 @@ const SearchInput = ({ setParams }) => {
               >
                 {user.screen_name && (
                   <div className="text-[#F17F0B] text-[12px]">
-                    {user.screen_name}
+                    @{user.screen_name}
                   </div>
                 )}
                 <CloseSvg
