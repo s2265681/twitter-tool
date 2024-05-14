@@ -3,9 +3,9 @@ const mainhost = "http://198.181.37.232:5001"; //
 // const get_user_info_list = ({
 //   screen_name,
 //   follow_category,
-//   created_at = "",
-//   followers = "",
-//   following = "",
+//   created_at = "All",
+//   followers = "All",
+//   following = "All",
 //   cursor = 1,
 // }: {
 //   screen_name: string;
@@ -67,9 +67,9 @@ const get_search_user_info_list = ({
   following: string;
   cursor: number;
 }) => {
-  let _followers_count = followers === "All" ? "" : followers;
-  let _following_count = following === "All" ? "" : following;
-  let _created_at = created_at === "All" ? "" : created_at;
+  let _followers_count = followers; // followers === "All" ? "" : followers;
+  let _following_count = following; // following === "All" ? "" : following;
+  let _created_at = created_at; // created_at === "All" ? "" : created_at;
   return fetch(
     `${mainhost}/get_search_user_info_list?text=${text}&follow_category=${follow_category}&created_at=${_created_at}&followers_count=${_followers_count}&following_count=${_following_count}&cursor=${cursor}`
   ).then((response) => response.json());
@@ -96,11 +96,11 @@ const get_filter_info = ({
 const get_compute_user_interact = ({
   screen_name = "",
   follow_category,
-  created_at = "",
-  followers = "",
-  following = "",
+  created_at = "All",
+  followers = "All",
+  following = "All",
   cursor = 1,
-  interact_ids,
+  interact_ids = "All",
 }: {
   screen_name: string;
   follow_category: "followers" | "following";
@@ -112,16 +112,19 @@ const get_compute_user_interact = ({
 }) => {
   let fetchUrl = `${mainhost}/compute_user_interact?screen_name=${screen_name}&follow_category=${follow_category}&cursor=${cursor}`;
   if (followers) {
-    fetchUrl += "&followers_count=" + followers;
+    followers = followers.replace("~", "_");
+    fetchUrl += "&followers_count=" + followers === "All" ? "" : followers;
   }
   if (following) {
-    fetchUrl += "&following_count=" + following;
+    following = following.replace("~", "_");
+    fetchUrl += "&following_count=" + following === "All" ? "" : following;
   }
   if (created_at) {
-    fetchUrl += "&created_at=" + created_at;
+    created_at = created_at.replace("~", "_");
+    fetchUrl += "&created_at=" + created_at === "All" ? "" : created_at;
   }
   if (interact_ids) {
-    fetchUrl += "&interact_ids=" + interact_ids;
+    fetchUrl += "&interact_ids=" + interact_ids === "All" ? "" : interact_ids;
   }
   return fetch(fetchUrl).then((response) => response.json());
 };

@@ -53,12 +53,13 @@ export default ({ dataSource, setPageNo }) => {
               <div className="absolute top-3 right-3">
                 {item?.following_screen_name_list &&
                   item?.following_screen_name_list.map((nameitem, index) => {
+                    console.log(nameitem, "nameitem...");
                     return (
                       <div className="" key={nameitem.name}>
                         <Tooltip title={nameitem.name}>
                           <img
                             className={`avatar relative z-[${item?.following_screen_name_list.length - index}]`}
-                            src={nameitem.src}
+                            src={nameitem.profile_image_url_https}
                             style={{
                               left: -index * 8 + "px",
                             }}
