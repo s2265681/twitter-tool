@@ -97,11 +97,9 @@ const SearchInput = ({ setParams }) => {
 
   useEffect(() => {
     if (forceUpdate) {
-      console.log(usersInfo, "usersInfo..");
-      console.log(interact_idsStr(), "interact_idsStr()");
       setParams((_params) => ({
         ..._params,
-        interact_ids: interact_idsStr(),
+        interact_ids: usersInfo.length > 1 ? interact_idsStr() : "",
       }));
     }
   }, [forceUpdate]);
@@ -115,7 +113,7 @@ const SearchInput = ({ setParams }) => {
         id: "",
       },
     ]);
-    searchUserInfo(getUserName(), true);
+    searchUserInfo(getUserName(), false);
   }, []);
 
   return (

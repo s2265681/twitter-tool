@@ -65,10 +65,9 @@ export default ({ dataSource, setPageNo }) => {
                 }}
                 onClick={handleContainerClick}
               ></div>
-              <div className="absolute top-3 right-3">
+              <div className="absolute top-3 right-3 flex">
                 {item?.following_screen_name_list &&
                   item?.following_screen_name_list.map((nameitem, index) => {
-                    console.log(nameitem, "nameitem...");
                     return (
                       <div className="" key={nameitem.name}>
                         <Tooltip title={nameitem.name}>
