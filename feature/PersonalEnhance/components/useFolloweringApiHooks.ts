@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { get_filter_info } from "../api";
 import { senChomeMessage, handleFilterObj, getUserName } from "~utils";
+import { message } from "antd";
 
 export const useFolloweringApiHooks = ({ isCanRender }) => {
   const type = "following";
@@ -35,7 +36,7 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
         screen_name: getUserName() || "ethereum",
         follow_category: type,
       },
-      response: ({ data, is_success }) => {
+      response: ({ data }) => {
         // if (is_success === false) {
         //   return setLoading(false);
         // }
@@ -66,18 +67,22 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
         ...params,
       },
       response: ({
-        data,
-        is_success,
-        message,
+        data: res,
       }: {
-        is_success: boolean;
-        data: any;
-        message: string;
+        data: {
+          data: any;
+          is_success: boolean;
+          message: string;
+        };
       }) => {
+        console.log(res, "res");
+        const is_success = res.is_success;
+        const msg = res.message;
         if (is_success === false) {
+          message.error(msg);
           return setLoading(false);
         }
-        data = data.data || {};
+        const data = res.data || {};
         setDataSource(
           pageNo === 1
             ? data

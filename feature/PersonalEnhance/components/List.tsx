@@ -55,7 +55,7 @@ export default ({ dataSource, setPageNo }) => {
                 className="w-[40px] h-[40px] rounded-full flex-none"
               ></img>
             </div>
-            <div className="flex flex-col gap-1 relative">
+            <div className="flex flex-col gap-1 relative flex-1">
               <div className=" font-semibold text_theme_text">{item.name}</div>
               <div className="text_theme_subText">@{item.screen_name}</div>
               <div

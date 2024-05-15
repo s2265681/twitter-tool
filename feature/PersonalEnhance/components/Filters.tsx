@@ -61,7 +61,7 @@ const SearchInput = ({ setParams }) => {
   >([]);
   const [forceUpdate, setForceUpdate] = useState(null);
 
-  // solana // TheMotre
+  // solana // TheMotre // binance
 
   const interact_idsStr = () => {
     return usersInfo.map((el) => el.id).join(",");
@@ -100,7 +100,7 @@ const SearchInput = ({ setParams }) => {
           });
           return newUserInfo;
         });
-        if (isSearch) setForceUpdate(new Date().toString().slice(10));
+        if (isSearch) setForceUpdate(new Date().getTime());
       },
     });
   };
@@ -170,7 +170,8 @@ const SearchInput = ({ setParams }) => {
                 }, 10);
               } else {
                 // 没有值也要搜索
-                setForceUpdate(new Date().toString().slice(10));
+                console.log("render");
+                setForceUpdate(new Date().getTime());
               }
             }
           }}
@@ -191,6 +192,7 @@ const SearchInput = ({ setParams }) => {
                 interact_ids: interact_idsStr(),
               },
               response: (data) => {
+                console.log(data, "data");
                 message.destroy();
                 message.success("export success!");
               },
@@ -211,7 +213,7 @@ const SearchInput = ({ setParams }) => {
               >
                 {user.screen_name && (
                   <div className="text-[#F17F0B] text-[12px]">
-                    @{user.screen_name}
+                    @{user.screen_name.replace("@", "")}
                   </div>
                 )}
                 {index !== 0 && (
