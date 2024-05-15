@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.log(error);
+      sendResponse({ data: {}, error: error, isError: true });
     }
   }
   if (request.action === "get_user_info_list") {
@@ -45,6 +45,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         .catch((error) => console.log(error));
     } catch (error) {
       console.log(error);
+      sendResponse({ data: {}, error: error, isError: true });
     }
   }
   // if (request.action === "get_search_user_info_list") {
@@ -66,7 +67,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         })
         .catch((error) => console.log(error));
     } catch (error) {
-      console.log(error);
+      sendResponse({ data: { isError: true } });
     }
   }
   if (request.action === "search_user_info") {
@@ -84,7 +85,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "export_user_interact") {
     const { screen_name, followers, following, created_at, interact_ids } =
       request.params;
-    let fetchUrl = `http://198.181.37.232:5001/export_user_interact?screen_name=${screen_name}`;
+    let fetchUrl = `http://198.181.37.232:5001/export_user_info_list?screen_name=${screen_name}`;
+    if (interact_ids) {
+      fetchUrl = `http://198.181.37.232:5001/export_user_interact?screen_name=${screen_name}`;
+    }
     if (followers) {
       fetchUrl += "&followers_count=" + followers;
     }

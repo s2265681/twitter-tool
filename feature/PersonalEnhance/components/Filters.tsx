@@ -4,8 +4,7 @@ import { created_at, followers_count, following_count } from "../config";
 import React, { useEffect, useRef, useState } from "react";
 import CloseSvg from "react:./close.svg";
 import { downloadFile, getUserName, senChomeMessage } from "~utils";
-import { message } from "antd";
-
+import { message, Button } from "antd";
 export default ({ filters, setParams, loading }) => {
   return (
     <div className="px-4 my-5">
@@ -61,6 +60,7 @@ const SearchInput = ({ setParams }) => {
     { id: string; screen_name: string }[]
   >([]);
   const [forceUpdate, setForceUpdate] = useState(null);
+
   // solana // TheMotre
 
   const interact_idsStr = () => {
@@ -75,7 +75,17 @@ const SearchInput = ({ setParams }) => {
       params: {
         screen_name: handleScreen_name,
       },
-      response: async ({ data }) => {
+      response: async ({ data: { data, is_success, message: msg } }) => {
+        if (is_success === false) {
+          setUsersInfo((_usersInfo) => {
+            let newUserInfo = [];
+            _usersInfo.map((el) => {
+              if (el.screen_name !== handleScreen_name) newUserInfo.push(el);
+            });
+            return newUserInfo;
+          });
+          return message.error(msg);
+        }
         await setUsersInfo((_usersInfo) => {
           let newUserInfo = [];
           _usersInfo.map((el) => {

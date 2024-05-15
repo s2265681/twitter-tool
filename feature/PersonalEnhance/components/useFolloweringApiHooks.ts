@@ -35,9 +35,12 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
         screen_name: getUserName() || "ethereum",
         follow_category: type,
       },
-      response: ({ data }) => {
+      response: ({ data, is_success }) => {
+        // if (is_success === false) {
+        //   return setLoading(false);
+        // }
+        data = data.data || {};
         const newFilters = {};
-
         const { created_at, followers, following } = data;
         newFilters["created_at"] = handleFilterObj(created_at);
         newFilters["followers"] = handleFilterObj(followers);
@@ -62,7 +65,19 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
         follow_category: type,
         ...params,
       },
-      response: ({ data }) => {
+      response: ({
+        data,
+        is_success,
+        message,
+      }: {
+        is_success: boolean;
+        data: any;
+        message: string;
+      }) => {
+        if (is_success === false) {
+          return setLoading(false);
+        }
+        data = data.data || {};
         setDataSource(
           pageNo === 1
             ? data
