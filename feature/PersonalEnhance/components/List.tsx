@@ -2,14 +2,12 @@ import React, { useEffect } from "react";
 import Tooltip from "./Tooltip";
 import { parseHtml } from "~utils";
 
-export default ({ dataSource, setPageNo }) => {
+export default ({ dataSource, setPageNo, cursor, total }) => {
   const data = Array.isArray(dataSource)
     ? dataSource
     : Array.isArray(dataSource?.user_info_list)
       ? dataSource?.user_info_list
       : dataSource?.user_info_list.user_info_list || [];
-  const cursor = dataSource?.cursor || 1;
-  const total = dataSource?.total;
   const loadMore = data.length < total;
   useEffect(() => {
     const reload_page = document.querySelector("#reload_page");
@@ -55,11 +53,16 @@ export default ({ dataSource, setPageNo }) => {
                 className="w-[40px] h-[40px] rounded-full flex-none"
               ></img>
             </div>
-            <div className="flex flex-col gap-1 relative flex-1">
+            <div
+              className="flex flex-col gap-1 relative flex-1"
+              style={{
+                maxWidth: "calc(100% - 48px)",
+              }}
+            >
               <div className=" font-semibold text_theme_text">{item.name}</div>
               <div className="text_theme_subText">@{item.screen_name}</div>
               <div
-                className="text_theme_text"
+                className="text_theme_text overflow-hidden break-words"
                 dangerouslySetInnerHTML={{
                   __html: parseHtml(item.description),
                 }}

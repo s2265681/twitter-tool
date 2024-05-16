@@ -20,12 +20,15 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
     },
   ];
 
+  const cursor = dataSource?.cursor || 1;
+  const total = dataSource?.total;
   let newData = Array.isArray(dataSource)
     ? dataSource
     : dataSource?.user_info_list || [];
 
   newData = newData.filter((el) => el.id !== "");
   console.log(newData, "newData...");
+
   return (
     <div className="" id="xxx">
       {/* <div className="p-4 m-3 flex items-center relative left-[100px]">
@@ -57,7 +60,12 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
         </div>
       )}
       {!loading && newData.length > 0 && (
-        <List dataSource={newData} setPageNo={setPageNo}></List>
+        <List
+          cursor={cursor}
+          total={total}
+          dataSource={newData}
+          setPageNo={setPageNo}
+        ></List>
       )}
       {!loading && newData?.length === 0 && (
         <div className="text-center font-extrabold text_theme_text text-[31px]">
