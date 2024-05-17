@@ -1,7 +1,7 @@
 {
   "name": "soulscan",
   "displayName": "soulscan",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Finding your Web3 alpha powered by Soulscan.info@soulscan.com",
   "author": "rockshang.cn",
   "scripts": {
