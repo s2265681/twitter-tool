@@ -36,7 +36,8 @@
   "manifest": {
     "host_permissions": [
       "*://twitter.com/*",
-      "*://*.twitter.com/*"
+      "*://*.twitter.com/*",
+      "*://*.x.com/*"
     ],
     "permissions": []
   }

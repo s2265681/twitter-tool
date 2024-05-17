@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 });
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://*.twitter.com/*"],
+  matches: ["https://*.twitter.com/*", "https://*.x.com/*"],
 };
 
 const PageIndex = () => {

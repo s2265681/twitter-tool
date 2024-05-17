@@ -7,7 +7,7 @@ import type {
 import { getUserName } from "~utils";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://*.twitter.com/*"],
+  matches: ["https://*.twitter.com/*", "https://*.x.com/*"],
 };
 
 const name = getUserName();
