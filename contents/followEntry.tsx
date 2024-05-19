@@ -22,7 +22,7 @@ export const config: PlasmoCSConfig = {
 const PageIndex = () => {
   return (
     <ThemeProvider>
-      <PersonalEnhance></PersonalEnhance>;
+      <PersonalEnhance></PersonalEnhance>
     </ThemeProvider>
   );
 };
