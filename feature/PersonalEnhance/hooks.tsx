@@ -97,17 +97,25 @@ export const useRenderUserLink = () => {
         );
 
         const UserNameDomParent = UserNameDom?.parentElement;
-
         if (!UserNameDom || !UserNameDomParent) {
           onceRef.current = false;
           return;
         }
 
         if (!userName2.current && UserNameDom?.children?.[0]) {
-          userName2.current = userName2.current
-            ? userName2.current
-            : findLastChildRecursive(UserNameDom.children[0]);
-          userName2.current = userName2.current.innerText.replace("@", "");
+          if (UserNameDom?.children?.[0].querySelector('div[tabindex="-1"]')) {
+            userName2.current = userName2.current
+              ? userName2.current
+              : findLastChildRecursive(
+                  UserNameDom?.children?.[0].querySelector('div[tabindex="-1"]')
+                );
+            userName2.current = userName2.current.innerText.replace("@", "");
+          } else {
+            userName2.current = userName2.current
+              ? userName2.current
+              : findLastChildRecursive(UserNameDom.children[0]);
+            userName2.current = userName2.current.innerText.replace("@", "");
+          }
         }
         console.log(userName2.current, "userName2.current");
         const followingLinkWrapper = UserNameDomParent.querySelector(
