@@ -109,16 +109,18 @@ export const useRenderUserLink = () => {
             : findLastChildRecursive(UserNameDom.children[0]);
           userName2.current = userName2.current.innerText.replace("@", "");
         }
-
+        console.log(userName2.current, "userName2.current");
         const followingLinkWrapper = UserNameDomParent.querySelector(
           `a[role="link"][dir="ltr"][href="/${userName2.current}/following"]`
         );
         const followerLinkWrapper = UserNameDomParent.querySelector(
           `a[role="link"][dir="ltr"][href="/${userName2.current}/verified_followers"]`
         );
-
-        if (userName2.current && followingLinkWrapper && followerLinkWrapper) {
+        if (userName2.current && followingLinkWrapper) {
           // 插入元素？
+          if (!UserNameDomParent.querySelector(".custom_links_following")) {
+            onceRef.current = false;
+          }
           if (!onceRef.current) {
             if (UserNameDomParent.querySelector(".custom_links_following")) {
               UserNameDomParent.querySelector(
