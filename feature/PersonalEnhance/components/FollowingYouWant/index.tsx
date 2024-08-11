@@ -9,9 +9,9 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
         PersionInfoDom } = useShowUserInfo()
     return (
         <div className="p-6"  onMouseLeave={() => {
-            // setShowUserInfo({
-            //     userInfo: null
-            // })
+            setShowUserInfo({
+                userInfo: null
+            })
         }}>
             {loading && (
                 <div className="flex w-full h-[100px] justify-center items-center">
