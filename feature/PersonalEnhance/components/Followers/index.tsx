@@ -1,5 +1,5 @@
 import React from "react";
-import CommonList from "./CommonList";
+import CommonList from "../CommonList";
 
 export default ({ followersParams }) => {
   const { filters, dataSource, setParams, loading, setPageNo } =

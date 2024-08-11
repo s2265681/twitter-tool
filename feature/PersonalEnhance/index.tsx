@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Followers from "~feature/PersonalEnhance/components/Followers";
-import Followering from "~feature/PersonalEnhance/components/Followering";
+import Followers from "~feature/PersonalEnhance/components/Followers/index";
+import Followering from "~feature/PersonalEnhance/components/Followering/index";
 import { createPortal } from "react-dom";
 import { useRenderDomHelpHooks, useRenderUserLink } from "./hooks";
-import { useFolloweringApiHooks } from "./components/useFolloweringApiHooks";
+import { useFolloweringApiHooks } from "./hooks/useFolloweringApiHooks";
 import {
   getLocationPathName,
   CUSTOM_CARD_KEY,
@@ -13,14 +13,19 @@ import {
 } from "./utils";
 import "./index.scss";
 import { clearLastSelection } from "~utils";
-// import { useFollowersApiHooks } from "./components/useFollowersApiHooks";
+import { useFollowYouMayWant } from "./hooks/useFollowYouMayWant";
+import { useResentFolloweringApiHooks } from "./hooks/useResentFolloweringApiHooks";
 
 const PersonlEnhance = ({
   followersParams,
   followeringParams,
+  recentFollowingParams,
+  followYouMayWantParams
 }: {
   followersParams?: any;
   followeringParams;
+  recentFollowingParams
+  followYouMayWantParams
 }) => {
   const { renderCardContent } = useRenderDomHelpHooks();
   const localPath = getLocationPathName();
@@ -37,7 +42,7 @@ const PersonlEnhance = ({
         <Followers followersParams={followersParams}></Followers>
       )} */}
       {$FOLLOWING === localPath && (
-        <Followering followeringParams={followeringParams}></Followering>
+        <Followering followeringParams={followeringParams} recentFollowingParams={recentFollowingParams} followYouMayWantParams={followYouMayWantParams}></Followering>
       )}
     </div>,
     document.querySelector('[aria-label="Home timeline"]')
@@ -81,6 +86,8 @@ const PersonlEnhanceWrapper = () => {
   }, []);
 
   const followeringParams = useFolloweringApiHooks({ isCanRender });
+  const recentFollowingParams = useResentFolloweringApiHooks({ isCanRender });
+  const followYouMayWantParams = useFollowYouMayWant({ isCanRender });
   // const followersParams = useFollowersApiHooks({ isCanRender });
 
   useRenderUserLink();
@@ -91,8 +98,9 @@ const PersonlEnhanceWrapper = () => {
 
   return (
     <PersonlEnhance
-      // followersParams={followersParams}
       followeringParams={followeringParams}
+      recentFollowingParams={recentFollowingParams}
+      followYouMayWantParams={followYouMayWantParams}
     ></PersonlEnhance>
   );
 };

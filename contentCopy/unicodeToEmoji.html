@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>内容展示</div>
+    <div id="box"></div>
+
+
+    <div id="wrapper">
+   
+    </div>
+</body>
+<script>
+
+// function unescapeString(str) {
+//     // 替换Unicode转义序列为对应的字符
+//     return str.replace(/\\(.)/g, function(match, grp) {
+//         // 如果匹配的是双引号，直接返回双引号
+//         if (grp === '"') return '"';
+//         // 否则，返回匹配的字符
+//         return grp;
+//     });
+// }
+
+
+// function unicodeToEmoji(unicodeStr) {
+//     // 首先替换换行符\n为换行元素
+//     var strWithBreaks = unescapeString(unicodeStr)
+//     return strWithBreaks.replace(/\\u([0-9a-fA-F]{4})/g, function(match, grp) {
+//         return String.fromCharCode(parseInt(grp, 16));
+//     });
+// }
+
+
+
+
+fetch("http://198.181.37.232:5001/get_user_info_list?screen_name=solana&cursor=2&follow_category=following&followers_count=&following_count=&created_at=", {
+    "headers": {
+        "accept": "*/*",
+        "accept-language": "zh-CN,zh;q=0.9,en-AU;q=0.8,en-US;q=0.7,en;q=0.6",
+        "cache-control": "no-cache",
+        "pragma": "no-cache"
+    },
+    "referrerPolicy": "strict-origin-when-cross-origin",
+    "body": null,
+    "method": "GET",
+    "mode": "cors",
+    "credentials": "omit"
+    }).then(response => response.json()).then(data => {
+        let box = document.getElementBsyId('box')
+        data.data.user_info_list.forEach(item => {
+            let div = document.createElement('div')
+            div.innerHTML = unicodeToEmoji(item.description)
+            box.appendChild(div)
+        })
+    });
+
+
+    function unescapeString(str) {
+    return str.replace(/\\u([0-9a-fA-F]{4})/g, function(match, grp) {
+                    return String.fromCharCode(parseInt(grp, 16));
+                }).replace(/\\(.)/g, function(match, grp, code) {
+        switch (grp) {
+            case 'n':
+                return '<br>'; // 将\n转换为换行
+            case "\/":
+              return ''; 
+            default:
+                // 如果是其他字符，直接返回
+                return grp;
+        }
+    });
+}
+
+
+    let str = `Reliable validator with high uptime since 2018\\n\\nDeveloping @stakeflow block explorer & community\\n\\n\\ud83d\\udcc8Stake $ATOM, $DOT, $SOL, $NEAR + 12 more`
+    // let str = `\\\"Shed the Light on the Community\\\"\\nOct 14th (MON), 2024 ~ Oct 20th (SUN), 2024`
+document.getElementById('wrapper').innerHTML = unescapeString(str)
+
+
+
+</script>
+</html>

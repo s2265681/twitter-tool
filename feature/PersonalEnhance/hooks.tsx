@@ -117,7 +117,6 @@ export const useRenderUserLink = () => {
             userName2.current = userName2.current.innerText.replace("@", "");
           }
         }
-        console.log(userName2.current, "userName2.current");
         const followingLinkWrapper = UserNameDomParent.querySelector(
           `a[role="link"][dir="ltr"][href="/${userName2.current}/following"]`
         );

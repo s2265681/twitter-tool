@@ -92,7 +92,7 @@ const Dropdown = ({
                       onSelect(item);
                     }}
                     className={classNames(
-                      "drowdown_modal_content_item",
+                      "drowdown_modal_content_item text_theme_text",
                       "flex justify-between items-center px-[12px] h-[50px] cursor-pointer select-none",
                       {
                         drowdown_modal_content_item_selected:

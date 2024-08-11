@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Tooltip from "./Tooltip";
-import { parseHtml } from "~utils";
+import Tooltip from "../../../components/Tooltip";
+import { parseHtml, unicodeToEmoji } from "~utils";
 
 export default ({ dataSource, setPageNo, cursor, total }) => {
   const data = Array.isArray(dataSource)
@@ -47,24 +47,22 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
               window.open(location.origin + "/" + item.screen_name, "_blank");
             }}
           >
-            <div className="w-[40px] h-[40px] rounded-full flex-none">
               <img
                 src={item.profile_image_url_https}
-                className="w-[40px] h-[40px] rounded-full flex-none"
+                className="border_theme w-[40px] h-[40px] rounded-full flex-none"
               ></img>
-            </div>
             <div
               className="flex flex-col gap-1 relative flex-1"
               style={{
                 maxWidth: "calc(100% - 48px)",
               }}
             >
-              <div className=" font-semibold text_theme_text">{item.name}</div>
+              <div className=" font-semibold text_theme_text">{unicodeToEmoji(item.name)}</div>
               <div className="text_theme_subText">@{item.screen_name}</div>
               <div
                 className="text_theme_text overflow-hidden break-words"
                 dangerouslySetInnerHTML={{
-                  __html: parseHtml(item.description),
+                  __html: unicodeToEmoji(parseHtml(item.description)),
                 }}
                 onClick={handleContainerClick}
               ></div>

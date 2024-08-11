@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { get_filter_info } from "../api";
 import { senChomeMessage, handleFilterObj, getUserName } from "~utils";
 
 export const useFollowersApiHooks = ({ isCanRender }) => {

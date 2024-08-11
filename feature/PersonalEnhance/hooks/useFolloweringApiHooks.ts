@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { get_filter_info } from "../api";
 import { senChomeMessage, handleFilterObj, getUserName } from "~utils";
 import { message } from "antd";
 
@@ -75,7 +74,6 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
           message: string;
         };
       }) => {
-        console.log(res, "res");
         const is_success = res.is_success;
         const msg = res.message;
         if (is_success === false) {

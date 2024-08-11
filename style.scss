@@ -1,18 +1,37 @@
 :root.light {
   .text_theme_text {
-    color: #333;
+    color: #333 !important;
   }
   .text_theme_subText {
     color: rgb(113, 118, 123);
+  }
+  .bg_theme {
+    background-color: #fff;
+  }
+  .border_theme {
+    border: 0.5px solid rgba(0,0,0,0.2);
+  }
+
+  .border_color_theme{
+    border-color:  rgba(30,30,30,0.1);
   }
 }
 
 :root.dim,
 :root.dark {
   .text_theme_text {
-    color: rgb(231, 233, 234);
+    color: rgb(231, 233, 234) !important;
   }
   .text_theme_subText {
     color: rgb(113, 118, 123);
+  }
+  .bg_theme {
+    background-color: #000;
+  }
+  .border_theme {
+    border: 0.5px solid rgba(255,255,255,0.2);
+  }
+  .border_color_theme{
+    border-color:  rgba(255,255,255,0.2);
   }
 }

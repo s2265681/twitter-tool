@@ -2,24 +2,9 @@ import React from "react";
 import MyLoadingSvg from "react:./loading.svg";
 import Filters from "./Filters";
 import List from "./List";
-import Tooltip from "./Tooltip";
+import Tooltip from "../../../components/Tooltip";
 
 export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
-  const avatarArr = [
-    {
-      title: "@Rockshang",
-      src: "https://d149xzut2sq6e3.cloudfront.net/upload/d10b52d9.png",
-    },
-    {
-      title: "@A18n",
-      src: "https://d149xzut2sq6e3.cloudfront.net/upload/6fb8b426.png",
-    },
-    {
-      title: "@dhDUDDUh_djfudhiuafhvui",
-      src: "https://d149xzut2sq6e3.cloudfront.net/upload/76d207b8.png",
-    },
-  ];
-
   const cursor = dataSource?.cursor || 1;
   const total = dataSource?.total;
   let newData = Array.isArray(dataSource)
@@ -27,10 +12,8 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
     : dataSource?.user_info_list || [];
 
   newData = newData.filter((el) => el.id !== "");
-  console.log(newData, "newData...");
-
   return (
-    <div className="" id="xxx">
+    <div className="p-3" id="xxx">
       {/* <div className="p-4 m-3 flex items-center relative left-[100px]">
         {avatarArr.map((item, index) => {
           return (
@@ -48,7 +31,6 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
           );
         })}
       </div> */}
-
       <Filters
         filters={filters}
         setParams={setParams}

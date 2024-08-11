@@ -170,7 +170,6 @@ const SearchInput = ({ setParams }) => {
                 }, 10);
               } else {
                 // 没有值也要搜索
-                console.log("render");
                 setForceUpdate(new Date().getTime());
               }
             }
@@ -192,7 +191,6 @@ const SearchInput = ({ setParams }) => {
                 interact_ids: interact_idsStr(),
               },
               response: (data) => {
-                console.log(data, "data");
                 message.destroy();
                 message.success("export success!");
               },
