@@ -48,7 +48,7 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
             }}
           >
               <img
-                src={item.profile_image_url_https}
+                src={item.profile_image_url_https || item.profile_image_url}
                 className="border_theme w-[40px] h-[40px] rounded-full flex-none"
               ></img>
             <div
@@ -74,7 +74,7 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
                         <Tooltip title={nameitem.name}>
                           <img
                             className={`avatar relative z-[${item?.following_screen_name_list.length - index}]`}
-                            src={nameitem.profile_image_url_https}
+                            src={nameitem.profile_image_url_https || nameitem.profile_image_url}
                             style={{
                               left: -index * 8 + "px",
                             }}

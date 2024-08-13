@@ -4,6 +4,8 @@ import {
   get_search_user_info_list,
   get_user_info_list,
   search_user_info,
+  get_user_recent_friends,
+  get_friends_you_want
 } from "~feature/PersonalEnhance/api";
 
 console.log(
@@ -21,6 +23,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "get_filter_info") {
     try {
       get_filter_info(request.params)
+        .then((data) => {
+          sendResponse({ data: data });
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      sendResponse({ data: {}, error: error, isError: true });
+    }
+  }
+  if (request.action === "get_user_recent_friends") {
+    try {
+      get_user_recent_friends(request.params)
+        .then((data) => {
+          sendResponse({ data: data });
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      sendResponse({ data: {}, error: error, isError: true });
+    }
+  }
+  if (request.action === "get_friends_you_want") {
+    try {
+      get_friends_you_want(request.params)
         .then((data) => {
           sendResponse({ data: data });
         })

@@ -13,6 +13,8 @@ interface UserInfo {
   name: string;
   avatar: string;
   profile_image_url_https: string;
+  profile_image_url?:string
+  user_id?:string;
 }
 
 const useShowUserInfo = () => {
@@ -35,7 +37,7 @@ const useShowUserInfo = () => {
     return (
       <div className="persion_info_modal_warpper bg_theme border_theme">
           <img
-            src={item.profile_image_url_https}
+            src={item.profile_image_url_https || item.profile_image_url}
             className="persion_pic w-[60px] h-[60px] rounded-full flex-none border_theme"
           ></img>
         <div
@@ -43,13 +45,13 @@ const useShowUserInfo = () => {
         >
           <div className=" font-semibold text_theme_text mt-1">{unicodeToEmoji(item.name)}</div>
           <div className="text_theme_subText">@{item.screen_name}</div>
-          <div
+         {item.description && <div
             className="text_theme_text overflow-hidden break-words"
             dangerouslySetInnerHTML={{
               __html: unicodeToEmoji(parseHtml(item.description)),
             }}
             onClick={handleContainerClick}
-          ></div>
+          ></div>}
         </div>
 
       </div>

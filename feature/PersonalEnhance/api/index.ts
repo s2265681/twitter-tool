@@ -1,4 +1,5 @@
 const mainhost = "http://198.181.37.232:5001"; //
+const testhost = "http://198.181.37.232:5002"
 // const mainhost = "http://107.182.191.234:5001";
 const get_user_info_list = ({
   screen_name,
@@ -28,6 +29,16 @@ const get_user_info_list = ({
     created_at = created_at.replace("~", "_");
     fetchUrl += "&created_at=" + (created_at === "All" ? "" : created_at);
   }
+  return fetch(fetchUrl).then((response) => response.json());
+};
+
+const get_user_recent_friends = ({screen_name})=>{
+  let fetchUrl = `${testhost}/get_user_recent_friends?screen_name=${screen_name}`;
+  return fetch(fetchUrl).then((response) => response.json());
+};
+
+const get_friends_you_want = ({screen_name})=>{
+  let fetchUrl = `${testhost}/get_friends_you_want?screen_name=${screen_name}`;
   return fetch(fetchUrl).then((response) => response.json());
 };
 
@@ -137,4 +148,6 @@ export {
   get_search_user_info_list,
   search_user_info,
   get_compute_user_interact,
+  get_user_recent_friends,
+  get_friends_you_want
 };

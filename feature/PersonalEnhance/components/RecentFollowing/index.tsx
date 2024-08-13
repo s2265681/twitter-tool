@@ -16,7 +16,7 @@ const RecentList = ({ dataSource, loading, setPageNo }) => {
   let newData = Array.isArray(dataSource)
     ? dataSource
     : dataSource?.user_info_list || [];
-  newData = newData.filter((el) => el.id !== "");
+  newData = newData.filter((el) => el.user_id !== "");
   return (
     <div className="" id="xxx">
       {loading && (

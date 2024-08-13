@@ -8,7 +8,7 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
     const { showUserInfo, setShowUserInfo,
         PersionInfoDom } = useShowUserInfo()
     return (
-        <div className="p-6"  onMouseLeave={() => {
+        <div className="p-6" onMouseLeave={() => {
             setShowUserInfo({
                 userInfo: null
             })
@@ -18,12 +18,12 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                     <MyLoadingSvg className="animate-spin"></MyLoadingSvg>
                 </div>
             )}
-            {!loading && <div className="flex gap-[18px]"
-               >
+            {!loading && <div className="flex gap-[18px] flex-wrap justify-between"
+            >
                 {
-                    dataSource.user_info_list.map((item, index) => {
+                    dataSource.map((item, index) => {
                         return (
-                            <div key={item.id}
+                            <div key={item.user_id}
                                 className=" relative"
                             >
                                 <div className="cursor-pointer flex flex-col justify-center items-center" onClick={() => {
@@ -35,16 +35,16 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                                             userInfo: item
                                         })
                                     }}
-                                
+
                                 >
                                     <img
-                                        src={item.profile_image_url_https}
+                                        src={item.profile_image_url_https || item.profile_image_url}
                                         className="border_theme w-[40px] h-[40px] rounded-full flex-none"
-                                        key={item.id+'image'}
+                                        key={item.id + 'image'}
                                     ></img>
                                     <div className="text-white text-center">{index}</div>
                                 </div>
-                                {item.id === showUserInfo.userInfo?.id  && <PersionInfoDom></PersionInfoDom>}
+                                {item.user_id === showUserInfo.userInfo?.user_id && <PersionInfoDom></PersionInfoDom>}
                             </div>
                         )
                     })
