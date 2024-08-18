@@ -8,15 +8,7 @@ export const useFollowYouMayWant = ({ isCanRender }) => {
   const [params, setParams] = useState({});
   const [forceUpdate, setForceUpdate] = useState(new Date().getTime());
 
-  const [dataSource, setDataSource] = useState<{
-    user_info_list: [];
-    cursor: number;
-    total: number;
-  }>({
-    user_info_list: [],
-    cursor: 1,
-    total: 0,
-  });
+  const [dataSource, setDataSource] = useState<[]>([]);
 
   useEffect(() => {
     if (!isCanRender) return;
@@ -40,23 +32,11 @@ export const useFollowYouMayWant = ({ isCanRender }) => {
         const is_success = res.is_success;
         const msg = res.message;
         if (is_success === false) {
-          message.error(msg);
+          // message.error(msg);
           return setLoading(false);
         }
-        const data = res.data || {};
-        console.log(data,'data....')
-        setDataSource(
-          pageNo === 1
-            ? data
-            : {
-                user_info_list: [
-                  ...dataSource.user_info_list,
-                  ...data.user_info_list,
-                ],
-                cursor: data.cursor,
-                total: data.total,
-              }
-        );
+        const data = res.data || [];
+        setDataSource(data);
         setLoading(false);
       },
     });

@@ -4,9 +4,10 @@ import useShowUserInfo from "./useShowUserInfo";
 
 
 const FollowingYouWant = ({ followYouMayWantParams }) => {
-    const { dataSource, loading } = followYouMayWantParams
+    const { dataSource = [], loading } = followYouMayWantParams
     const { showUserInfo, setShowUserInfo,
         PersionInfoDom } = useShowUserInfo()
+
     return (
         <div className="p-6" onMouseLeave={() => {
             setShowUserInfo({
@@ -18,12 +19,12 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                     <MyLoadingSvg className="animate-spin"></MyLoadingSvg>
                 </div>
             )}
-            {!loading && <div className="flex gap-[18px] flex-wrap justify-between"
+            {!loading && dataSource?.length > 0 && <div className="flex gap-[18px] flex-wrap justify-between"
             >
                 {
                     dataSource.map((item, index) => {
                         return (
-                            <div key={item.user_id}
+                            <div key={item.user_id + '--' + index}
                                 className=" relative"
                             >
                                 <div className="cursor-pointer flex flex-col justify-center items-center" onClick={() => {
@@ -44,13 +45,18 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                                     ></img>
                                     <div className="text-white text-center">{index}</div>
                                 </div>
-                                {item.user_id === showUserInfo.userInfo?.user_id && <PersionInfoDom></PersionInfoDom>}
+                                {item.user_id + '-' + index === showUserInfo.userInfo?.user_id + '-' + index&& <div key={item.user_id + '--item--' + index}><PersionInfoDom></PersionInfoDom></div>}
                             </div>
                         )
                     })
                 }
 
             </div>}
+            {!loading && dataSource?.length === 0 && (
+                <div className="text-center font-extrabold text_theme_text text-[31px]">
+                    no data， try again later
+                </div>
+            )}
         </div>
     )
 }

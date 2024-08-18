@@ -77,7 +77,7 @@ export const useFolloweringApiHooks = ({ isCanRender }) => {
         const is_success = res.is_success;
         const msg = res.message;
         if (is_success === false) {
-          message.error(msg);
+          // message.error(msg);
           return setLoading(false);
         }
         const data = res.data || {};

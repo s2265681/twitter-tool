@@ -4,14 +4,13 @@
 
 .persion_info_modal_warpper{
     position: absolute;
-    height: 300px;
     border-radius: 16px;
     width: 280px;
-    min-height: 300px;
     z-index: 9;
     top: 45px;
     left: 40px;
     padding: 15px;
+    min-height: 150px;
 
     .persion_pic{
     }

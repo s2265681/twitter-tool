@@ -51,7 +51,7 @@ export default ({ filters, dataSource, setParams, loading, setPageNo }) => {
       )}
       {!loading && newData?.length === 0 && (
         <div className="text-center font-extrabold text_theme_text text-[31px]">
-          No Data
+          no data， try again later
         </div>
       )}
     </div>

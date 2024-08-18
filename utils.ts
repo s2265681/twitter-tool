@@ -126,17 +126,20 @@ export const parseHtml = (string) => {
 
 
 export function unicodeToEmoji(unicodeStr) {
-  return unicodeStr.replace(/\\u([0-9a-fA-F]{4})/g, function(match, grp) {
-    return String.fromCharCode(parseInt(grp, 16));
-}).replace(/\\(.)/g, function(match, grp) {
-    switch (grp) {
-    case 'n':
-    return '<br>'; // 将\n转换为换行
-    case "\/":
-    return ''; 
-    default:
-    // 如果是其他字符，直接返回
-    return grp;
-    }
-    });
+  if(unicodeStr && typeof unicodeStr =='string'){
+    return unicodeStr.replace(/\\u([0-9a-fA-F]{4})/g, function(match, grp) {
+      return String.fromCharCode(parseInt(grp, 16));
+  }).replace(/\\(.)/g, function(match, grp) {
+      switch (grp) {
+      case 'n':
+      return '<br>'; // 将\n转换为换行
+      case "\/":
+      return ''; 
+      default:
+      // 如果是其他字符，直接返回
+      return grp;
+      }
+      });
+  }
+  return unicodeStr
 }
