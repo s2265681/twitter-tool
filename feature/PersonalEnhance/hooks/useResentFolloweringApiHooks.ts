@@ -19,6 +19,16 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
   useEffect(() => {
     if (!isCanRender) return;
     setLoading(true);
+    setTimeout(()=>{
+      if(loading){
+        setDataSource({
+          user_info_list: [],
+          cursor: 1,
+          total: 0,
+        });
+        setLoading(false);
+      }
+    },8000)
     senChomeMessage({
       action: "get_user_recent_friends",
       params: {
@@ -52,6 +62,7 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
                 total: data.total,
               }
         );
+       
         setLoading(false);
       },
     });

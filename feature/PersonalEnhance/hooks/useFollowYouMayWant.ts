@@ -16,6 +16,14 @@ export const useFollowYouMayWant = ({ isCanRender }) => {
     if (pageNo === 1) {
       setLoading(true);
     }
+
+    setTimeout(()=>{
+      if(loading){
+        setDataSource([]);
+        setLoading(false);
+      }
+    },8000)
+
     senChomeMessage({
       action: "get_friends_you_want",
       params: {
