@@ -19,7 +19,7 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
   useEffect(() => {
     if (!isCanRender) return;
     setLoading(true);
-    setTimeout(()=>{
+   let timer =   setTimeout(()=>{
       if(loading){
         setDataSource({
           user_info_list: [],
@@ -43,6 +43,7 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
           message: string;
         };
       }) => {
+        clearTimeout(timer)
         const is_success = res.is_success;
         const msg = res.message;
         if (is_success === false) {

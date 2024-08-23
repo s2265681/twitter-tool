@@ -17,8 +17,8 @@ export const useFollowYouMayWant = ({ isCanRender }) => {
       setLoading(true);
     }
 
-    setTimeout(()=>{
-      if(loading){
+    let timer =   setTimeout(()=>{
+      if(loading ){
         setDataSource([]);
         setLoading(false);
       }
@@ -37,6 +37,7 @@ export const useFollowYouMayWant = ({ isCanRender }) => {
           message: string;
         };
       }) => {
+        clearTimeout(timer)
         const is_success = res.is_success;
         const msg = res.message;
         if (is_success === false) {
