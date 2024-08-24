@@ -8,7 +8,7 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
     : Array.isArray(dataSource?.user_info_list)
       ? dataSource?.user_info_list
       : dataSource?.user_info_list.user_info_list || [];
-  const loadMore = data.length < total;
+  const loadMore = cursor < total;
   useEffect(() => {
     const reload_page = document.querySelector("#reload_page");
     if (!reload_page) return;
@@ -48,7 +48,7 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
             }}
           >
               <img
-                src={item.profile_image_url_https || item.profile_image_url}
+                src={item.profile_image_url_https}
                 className="border_theme w-[40px] h-[40px] rounded-full flex-none"
               ></img>
             <div
@@ -74,7 +74,7 @@ export default ({ dataSource, setPageNo, cursor, total }) => {
                         <Tooltip title={nameitem.name}>
                           <img
                             className={`avatar relative z-[${item?.following_screen_name_list.length - index}]`}
-                            src={nameitem.profile_image_url_https || nameitem.profile_image_url}
+                            src={nameitem.profile_image_url_https}
                             style={{
                               left: -index * 8 + "px",
                             }}

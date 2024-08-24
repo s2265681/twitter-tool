@@ -7,11 +7,11 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
   const [pageNo, setPageNo] = useState(1);
 
   const [dataSource, setDataSource] = useState<{
-    user_info_list: [];
+    recent_friends_list: [];
     cursor: number;
     total: number;
   }>({
-    user_info_list: [],
+    recent_friends_list: [],
     cursor: 1,
     total: 0,
   });
@@ -20,9 +20,9 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
     if (!isCanRender) return;
     setLoading(true);
    let timer =   setTimeout(()=>{
-      if(loading){
+      if(loading && dataSource.recent_friends_list.length === 0){
         setDataSource({
-          user_info_list: [],
+          recent_friends_list: [],
           cursor: 1,
           total: 0,
         });
@@ -33,6 +33,7 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
       action: "get_user_recent_friends",
       params: {
         screen_name: getUserName() || "ethereum",
+        cursor: pageNo ||1,
       },
       response: ({
         data: res,
@@ -55,9 +56,9 @@ export const useResentFolloweringApiHooks = ({ isCanRender }) => {
           pageNo === 1
             ? data
             : {
-                user_info_list: [
-                  ...dataSource.user_info_list,
-                  ...data.user_info_list,
+              recent_friends_list: [
+                  ...dataSource.recent_friends_list,
+                  ...data.recent_friends_list,
                 ],
                 cursor: data.cursor,
                 total: data.total,

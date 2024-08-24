@@ -15,16 +15,16 @@ const RecentList = ({ dataSource, loading, setPageNo }) => {
   const total = dataSource?.total;
   let newData = Array.isArray(dataSource)
     ? dataSource
-    : dataSource?.user_info_list || [];
-  newData = newData.filter((el) => el.user_id !== "");
+    : dataSource?.recent_friends_list || [];
+  newData = newData.filter((el) => el.id !== "");
   return (
     <div className="" id="xxx">
-      {loading && (
+      {loading && cursor <=1 && (
         <div className="flex w-full h-[100px] justify-center items-center">
           <MyLoadingSvg className="animate-spin"></MyLoadingSvg>
         </div>
       )}
-      {!loading && newData.length > 0 && (
+      { newData.length > 0 && (
         <List
           cursor={cursor}
           total={total}
@@ -32,9 +32,14 @@ const RecentList = ({ dataSource, loading, setPageNo }) => {
           setPageNo={setPageNo}
         ></List>
       )}
-      {!loading && newData?.length === 0 && (
+      {!loading && newData.length==0 && (
         <div className="text-center font-extrabold text_theme_text text-[31px]">
           no data， try again later
+        </div>
+      )}
+       {!loading && cursor == total && (
+        <div className="text-center font-extrabold text_theme_text text-[31px]">
+          no more data...
         </div>
       )}
     </div>

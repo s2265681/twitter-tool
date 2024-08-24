@@ -32,8 +32,8 @@ const get_user_info_list = ({
   return fetch(fetchUrl).then((response) => response.json());
 };
 
-const get_user_recent_friends = ({screen_name})=>{
-  let fetchUrl = `${testhost}/get_user_recent_friends?screen_name=${screen_name}`;
+const get_user_recent_friends = ({screen_name,cursor})=>{
+  let fetchUrl = `${testhost}/get_user_recent_friends?screen_name=${screen_name}&cursor=${cursor}`;
   return fetch(fetchUrl).then((response) => response.json());
 };
 
