@@ -100,9 +100,7 @@ export const setOriginTabSelectedStyle = (isShow) => {
 };
 
 export const setOriginAreaIsShow = (display: boolean) => {
-  const home_timeline_area = document.querySelector(
-    '[aria-label="Home timeline"]'
-  );
+  const home_timeline_area = getHomeLineArea()
   if (!home_timeline_area) return;
   if (home_timeline_area.lastChild && home_timeline_area.lastChild.style) {
     home_timeline_area.lastChild.style.display = display ? "block" : "none";
@@ -138,3 +136,7 @@ export const setThemeColor = () => {
       break;
   }
 };
+
+export const getHomeLineArea = ()=>{
+  return document.querySelector('[aria-label="Home timeline"]') || document.querySelector('[aria-label="主页时间线"]')
+} 

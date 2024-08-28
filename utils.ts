@@ -1,6 +1,7 @@
 import { error } from "console";
 import {
   CUSTOM_CARD_KEY,
+  getHomeLineArea,
   setOriginTabSelectedStyle,
 } from "~feature/PersonalEnhance/utils";
 
@@ -79,7 +80,7 @@ export function getUserName() {
 }
 
 export function clearLastSelection() {
-  const HomeTimeline = document.querySelector('[aria-label="Home timeline"]');
+  const HomeTimeline = getHomeLineArea()
   if (CUSTOM_CARD_KEY.includes(location.hash)) {
     const lastEle = HomeTimeline.lastChild;
     if (

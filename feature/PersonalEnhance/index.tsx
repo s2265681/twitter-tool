@@ -10,6 +10,7 @@ import {
   $FOLLOWERS,
   $FOLLOWING,
   followUrlPaths,
+  getHomeLineArea,
 } from "./utils";
 import "./index.scss";
 import { clearLastSelection } from "~utils";
@@ -45,7 +46,7 @@ const PersonlEnhance = ({
         <Followering followeringParams={followeringParams} recentFollowingParams={recentFollowingParams} followYouMayWantParams={followYouMayWantParams}></Followering>
       )}
     </div>,
-    document.querySelector('[aria-label="Home timeline"]')
+    getHomeLineArea()
   );
 };
 
@@ -58,9 +59,7 @@ const PersonlEnhanceWrapper = () => {
     function updateIsRender() {
       timerId = setInterval(() => {
         const tablistNode = document.querySelector('[role="tablist"]');
-        const HomeTimeline = document.querySelector(
-          '[aria-label="Home timeline"]'
-        );
+        const HomeTimeline = getHomeLineArea()
         const locationPath = location.pathname.split("/")?.[2];
         if (
           followUrlPaths.includes(locationPath) &&
@@ -89,12 +88,12 @@ const PersonlEnhanceWrapper = () => {
   const recentFollowingParams = useResentFolloweringApiHooks({ isCanRender });
   const followYouMayWantParams = useFollowYouMayWant({ isCanRender });
   // const followersParams = useFollowersApiHooks({ isCanRender });
-
   useRenderUserLink();
 
   if (!isCanRender) return null;
   const locationPath = location.pathname.split("/")?.[2];
   if (!followUrlPaths.includes(locationPath)) return null;
+
 
   return (
     <PersonlEnhance
