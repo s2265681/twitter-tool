@@ -5,7 +5,8 @@ import { getCookieValue, senChomeMessage } from "~utils";
 import "../style.css";
 import "../style.scss";
 import { ThemeProvider } from "~theme";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";//body 引入颜色
+import "antd/lib/message/style/index.css"; // 只引入 message 组件的样式
 
 // 在content脚本中接收数据
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
