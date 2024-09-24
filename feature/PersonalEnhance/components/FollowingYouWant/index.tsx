@@ -24,7 +24,7 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                 {
                     dataSource.map((item, index) => {
                         return (
-                            <div key={item.user_id + '--' + index}
+                            <div key={item.id + '--' + index}
                                 className=" relative"
                             >
                                 <div className="cursor-pointer flex flex-col justify-center items-center" onClick={() => {
@@ -45,7 +45,7 @@ const FollowingYouWant = ({ followYouMayWantParams }) => {
                                     ></img>
                                     <div className="text-white text-center">{index}</div>
                                 </div>
-                                {item.user_id + '-' + index === showUserInfo.userInfo?.user_id + '-' + index&& <div key={item.user_id + '--item--' + index}><PersionInfoDom></PersionInfoDom></div>}
+                                {item.id + '-' + index === showUserInfo.userInfo?.id + '-' + index&& <div key={item.id + '--item--' + index}><PersionInfoDom></PersionInfoDom></div>}
                             </div>
                         )
                     })
